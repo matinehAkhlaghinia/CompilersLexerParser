@@ -17,9 +17,9 @@ Identifier = [a-zA-Z] [a-zA-Z0-9_]*
 
 //Character
 char = \' {letter} | {Punctuation} | {Digit} \'
-Punctuation = " " | "!" | \" | "#" | "$" | "%" | "&" | \' | "(" | ")" | "*"
-| "+" | "," | "-" | "." | // | ":" | ";" | "<" | ">" | "=" | "?" | "@" 
-| "[" | "]" | "^" | "_" | "`" | "{"| "¦"| "}" | "~"      '
+//Punctuation = " " | "!" | \" | "#" | "$" | "%" | "&" | \' | "(" | ")" | "*"
+//| "+" | "," | "-" | "." | // | ":" | ";" | "<" | ">" | "=" | "?" | "@"
+//| "[" | "]" | "^" | "_" | "`" | "{"| "¦"| "}" | "~"
 
 //Boolean
 bool = "T" | "F"
@@ -33,7 +33,7 @@ Number = {int} | {rat} | {float}
 float = {int} "." {posint}
 
 //Datatypes
-Datatype = {}
+//Datatype = {}
 
 //dict
 DictDeclaration = "dict""<"{Datatype}","{Datatype}">"
