@@ -2,6 +2,7 @@
 %%
 %class Lexer
 %standalone
+
 //Characters
 Letter = [a-zA-Z]
 Digit = [0-9]
@@ -16,13 +17,11 @@ EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}?
 //Identifier
 //Identifier = [a-zA-Z] [a-zA-Z0-9_]*
 
-Identifier = [:jletter:][:jletterdigit:]*
+//Identifier = [:jletter:][:jletterdigit:]*
 
 //Character
 char = \' {letter} | {Punctuation} | {Digit} \'
-//Punctuation = " " | "!" | \" | "#" | "$" | "%" | "&" | \' | "(" | ")" | "*"
-//| "+" | "," | "-" | "." | // | ":" | ";" | "<" | ">" | "=" | "?" | "@"
-//| "[" | "]" | "^" | "_" | "`" | "{"| "¦"| "}" | "~"
+Punctuation = " " | "!" | \" | "#" | "$" | "%" | "&" | \' | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | ">" | "=" | "?" | "@" | "[" | "]" | "^" | "_" | "`" | "{"| "¦"| "}" | "~"
 
 //Boolean
 bool = "T" | "F"
@@ -44,8 +43,8 @@ DictDeclaration = "dict""<"{Datatype}","{Datatype}">"
 %%
 {WhiteSpace} {/* Do nothing! */}
 {Digit}+ {System.out.printf("number [%s]\n", yytext());}
-{Letter}({Letter}|{Digit})*
-{System.out.printf("word [%s]\n", yytext());}
+{Letter}({Letter}|{Digit})* {System.out.printf("word [%s]\n", yytext());}
+{Punctuation} {System.out.printf("punctuation [%s]\n", yytext());}
 . {System.out.printf("symbol [%s]\n", yytext());}
 
 
