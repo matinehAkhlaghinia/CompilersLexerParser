@@ -21,7 +21,7 @@ import java_cup.runtime.*;
 
 //Symbols (Terminal and non-terminal lists)
 
-terminal SEMI, PLUS,  MINUS, TIMES, DIVIDE, LPAREN, RPAREN, CHARACTER, 
+terminal SEMI, COLON, PLUS,  MINUS, TIMES, DIVIDE, LPAREN, RPAREN, CHAR, IDENTIFIER, BOOL, INT, FLOAT, RAT, DICT, SEQ, TDEF, IF, LOOP, FI, POOL, TOP, LCURL, RCURL, ASSIGN_EQUAL, PUNC
 
 non-terminal expr
 
@@ -35,6 +35,19 @@ precedence left PLUS, MINUS;
 
 //Grammar (context-free)
 
+number ::= FLOAT | RAT | INT
+
+data ::=
+
+dataType ::=
+
+declaration ::= IDENTIFIER COLON dataType //define datatype
+
+decleration_assignment ::= declaration ASSIGN_EQUAL DATA //define data
+
+typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL
+
+objectArray ::= IDENTIFIER COLON dataType PUNC objectArray | IDENTIFIER COLON dataType
 
 expr  ::= expr:e1 PLUS expr:e2    
 	      |

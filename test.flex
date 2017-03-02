@@ -29,13 +29,17 @@ bool = "T" | "F"
 //Numbers
 posint = {Digit}*
 int = "-" {Digit}*
-ratpartone = {int}"_"
+ratpartone =\ {int}"_"
 rat = {ratpartone}? {int} // {int} //can these actually be negative??
 Number = {int} | {rat} | {float}
 float = {int} "." {posint}
 
+
 //Datatypes
 //Datatype = {}
+
+//Top
+top = (Any data type)
 
 //dict
 DictDeclaration = "dict""<"{Datatype}","{Datatype}">"
