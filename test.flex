@@ -1,19 +1,22 @@
 
 %%
-
+%class Lexer
+%standalone
 //Characters
 Letter = [a-zA-Z]
 Digit = [0-9]
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
-WhiteSpace     = {LineTerminator} | [\t\f]
+WhiteSpace = [ \t\n]+
 
 //Comments
-TraditionalComment   = "/#" ~"#/"
+NormalComment   = "/#" ~"#/"
 EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}?
 
 //Identifier
-Identifier = [a-zA-Z] [a-zA-Z0-9_]*
+//Identifier = [a-zA-Z] [a-zA-Z0-9_]*
+
+Identifier = [:jletter:][:jletterdigit:]*
 
 //Character
 char = \' {letter} | {Punctuation} | {Digit} \'
@@ -39,5 +42,10 @@ float = {int} "." {posint}
 DictDeclaration = "dict""<"{Datatype}","{Datatype}">"
 //here shall we accept spaces or not?
 %%
+{WhiteSpace} {/* Do nothing! */}
+{Digit}+ {System.out.printf("number [%s]\n", yytext());}
+{Letter}({Letter}|{Digit})*
+{System.out.printf("word [%s]\n", yytext());}
+. {System.out.printf("symbol [%s]\n", yytext());}
 
-. {}
+
