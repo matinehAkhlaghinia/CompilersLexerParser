@@ -21,8 +21,8 @@ import java_cup.runtime.*;
 
 //Symbols (Terminal and non-terminal lists)
 
-terminal SEMI, COLON, PLUS,  MINUS, TIMES, DIVIDE, LPAREN, RPAREN, CHAR, IDENTIFIER, BOOL, DICT, SEQ, TDEF, IF, LOOP, FI, POOL, TOP, LCURL, RCURL, ASSIGN_EQUAL, PUNC, DATATYPE, NUMBER, ALIAS
-, FDEF, THEN, ELSE, BREAK, LBRACKET, RBRACKET
+terminal SEMI, COLON, PLUS,  MINUS, TIMES, DIVIDE, LPAREN, RPAREN, CHARACTER, IDENTIFIER, BOOL, DICT, SEQ, TDEF, IF, LOOP, FI, POOL, TOP, LCURL, RCURL, ASSIGN_EQUAL, PUNC, DATATYPE, NUMBER, ALIAS
+, FDEF, THEN, ELSE, BREAK, LBRACKET, RBRACKET, EXCLAM, AND, OR, IMPLY, SMALLER, SMALLER_EQ, EQUAL, NOTEQUAL
 
 non-terminal expr
 
@@ -38,18 +38,18 @@ precedence left PLUS, MINUS;
 
 //number ::= FLOAT | RAT | INT
 
-expression ::= declaration | decleration_assignment | break_statement | .... ///the body of the functions
+statements ::= declaration | decleration_assignment | break_statement | .... ///the body of the functions
 
-body ::= body expression | 
+body ::= body statements | 
 
 
 declaration ::= IDENTIFIER COLON DATATYPE SEMI
 
-assignment_expressions ::= DATA | function | operation | comparison         //we should add this to ambiguities that we can assign functions in declerations
+expression ::= DATA | function | operation | comparison | IDENTIFIER       //we should add this to ambiguities that we can assign functions in declerations
 
-decleration_assignment ::= declaration ASSIGN_EQUAL assignment_expressions //define data imo the data should be passed from the lexer 
+decleration_assignment ::= declaration ASSIGN_EQUAL expression //define data imo the data should be passed from the lexer 
 
-dictionary_binding ::= IDENTIFIER LBRACKET assignment_expressions RBRACKET COLON ASSIGN_EQUAL assignment_expressions
+dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON ASSIGN_EQUAL expression
 //d[k] := v
 
 
@@ -70,7 +70,7 @@ function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL body RCURL returnType
 returnType ::= COLON DATATYPE |
 
 
-if_statement ::= IF LPAREN assignment_expressions RPAREN THEN body if_else_statement FI
+if_statement ::= IF LPAREN expression RPAREN THEN body if_else_statement FI
 
 if_else_statement ::= ELSE body |
 
@@ -78,27 +78,45 @@ if_else_statement ::= ELSE body |
 break_statement ::= BREAK | BREAK NUMBER   //the ambiguity here is that when break is outside the loop how would we realize
 loop_statement ::= LOOP body POOL
 
-boolean_operations ::= 
+comparison ::= NUMBER SMALLER NUMBER
+ 		   |
+ 		   NUMBER SMALLER_EQ NUMBER
+ 		   
+
+equality ::= NUMBER EQUAL NUMBER
+		 | BOOL EQUAL BOOL
+		 | NUMBER NOTEQUAL NUMBER
+		 | BOOL NOTEQUAL BOOL
 
 
+//We need to think about this case bool a = 2
+boolean_operations ::= EXCLAM expression 
+		   		   | 
+		   		   expression AND expression
+		           | 
+		           expression OR expression
+		           | 
+		           expression IMPLY expression
 
-comparison ::=
+s[i:j], s[i:], s[:i]
 
-operation  ::= operation:e1 PLUS operation:e2    
+sequence ::= IDENTIFIER LBRACKET IDENTIFIER
+
+operation  ::= operation PLUS operation   
 	      |
-	      operation:e1 MINUS operation:e2    
+	      operation MINUS operation   
 	      | 
-          operation:e1 TIMES operation:e2 
+          operation TIMES operation 
 	      | 
-	      operation:e1 DIVIDE operation:e2 
+	      operation DIVIDE operation 
 	      | 
-          operation:e1 MOD operation:e2 
+          operation MOD operation 
 	      | 
-          NUMBER:n                  
+          NUMBER                  
 	      | 
-          MINUS operation:e             
+          MINUS operation             
 	      | 
-          LPAREN operation:e RPAREN     
+          LPAREN operation RPAREN     
 
 
 
