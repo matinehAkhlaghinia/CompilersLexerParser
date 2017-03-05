@@ -21,7 +21,8 @@ import java_cup.runtime.*;
 
 //Symbols (Terminal and non-terminal lists)
 
-terminal SEMI, COLON, PLUS,  MINUS, TIMES, DIVIDE, LPAREN, RPAREN, CHAR, IDENTIFIER, BOOL, INT, FLOAT, RAT, DICT, SEQ, TDEF, IF, LOOP, FI, POOL, TOP, LCURL, RCURL, ASSIGN_EQUAL, PUNC
+terminal SEMI, COLON, PLUS,  MINUS, TIMES, DIVIDE, LPAREN, RPAREN, CHAR, IDENTIFIER, BOOL, DICT, SEQ, TDEF, IF, LOOP, FI, POOL, TOP, LCURL, RCURL, ASSIGN_EQUAL, PUNC, DATATYPE, NUMBER, ALIAS
+, FDEF, THEN, ELSE, BREAK
 
 non-terminal expr
 
@@ -35,35 +36,70 @@ precedence left PLUS, MINUS;
 
 //Grammar (context-free)
 
-number ::= FLOAT | RAT | INT
+//number ::= FLOAT | RAT | INT
 
-data ::=
+expression ::= declaration | decleration_assignment | .... ///the body of the functions
 
-dataType ::=
+body ::= body expression | 
 
-declaration ::= IDENTIFIER COLON dataType //define datatype
 
-decleration_assignment ::= declaration ASSIGN_EQUAL DATA //define data
+declaration ::= IDENTIFIER COLON DATATYPE SEMI
 
-typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL
+assignment_expressions ::= DATA | function | operation | comparison         //we should add this to ambiguities that we can assign functions in declerations
 
-objectArray ::= IDENTIFIER COLON dataType PUNC objectArray | IDENTIFIER COLON dataType
+decleration_assignment ::= declaration ASSIGN_EQUAL assignment_expressions //define data imo the data should be passed from the lexer 
 
-expr  ::= expr:e1 PLUS expr:e2    
+
+typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI
+objectArray ::= IDENTIFIER COLON DATATYPE PUNC objectArray | IDENTIFIER COLON dataType SEMI
+
+
+alias ::= ALIAS DATATYPE IDENTIFIER SEMI | ALIAS IDENTIFIER IDENTIFIER SEMI
+
+
+parameter ::= DATATYPE IDENTIFIER parameterTail 
+
+parameterTail ::= PUNC parameter | 
+
+
+function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL body RCURL returnType SEMI ////do we need to consider space?
+
+returnType ::= COLON DATATYPE |
+
+
+if_statement ::= IF LPAREN assignment_expressions RPAREN THEN body if_else_statement FI
+
+if_else_statement ::= ELSE body |
+
+
+break_statement ::= BREAK | BREAK NUMBER   //the ambiguity here is that when break is outside the loop how would we realize
+
+//loop_body ::= body b
+
+loop_statement ::= LOOP body
+
+//if statement
+//loop statement
+
+
+
+comparison ::=
+
+operation  ::= operation:e1 PLUS operation:e2    
 	      |
-	      expr:e1 MINUS expr:e2    
+	      operation:e1 MINUS operation:e2    
 	      | 
-          expr:e1 TIMES expr:e2 
+          operation:e1 TIMES operation:e2 
 	      | 
-	      expr:e1 DIVIDE expr:e2 
+	      operation:e1 DIVIDE operation:e2 
 	      | 
-          expr:e1 MOD expr:e2 
+          operation:e1 MOD operation:e2 
 	      | 
           NUMBER:n                  
 	      | 
-          MINUS expr:e             
+          MINUS operation:e             
 	      | 
-          LPAREN expr:e RPAREN     
+          LPAREN operation:e RPAREN     
 
 
 
