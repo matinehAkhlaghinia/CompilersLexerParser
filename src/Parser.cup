@@ -22,7 +22,7 @@ import java_cup.runtime.*;
 //Symbols (Terminal and non-terminal lists)
 
 terminal SEMI, COLON, PLUS,  MINUS, TIMES, DIVIDE, LPAREN, RPAREN, CHAR, IDENTIFIER, BOOL, DICT, SEQ, TDEF, IF, LOOP, FI, POOL, TOP, LCURL, RCURL, ASSIGN_EQUAL, PUNC, DATATYPE, NUMBER, ALIAS
-, FDEF, THEN, ELSE, BREAK
+, FDEF, THEN, ELSE, BREAK, LBRACKET, RBRACKET
 
 non-terminal expr
 
@@ -38,7 +38,7 @@ precedence left PLUS, MINUS;
 
 //number ::= FLOAT | RAT | INT
 
-expression ::= declaration | decleration_assignment | .... ///the body of the functions
+expression ::= declaration | decleration_assignment | break_statement | .... ///the body of the functions
 
 body ::= body expression | 
 
@@ -48,6 +48,9 @@ declaration ::= IDENTIFIER COLON DATATYPE SEMI
 assignment_expressions ::= DATA | function | operation | comparison         //we should add this to ambiguities that we can assign functions in declerations
 
 decleration_assignment ::= declaration ASSIGN_EQUAL assignment_expressions //define data imo the data should be passed from the lexer 
+
+dictionary_binding ::= IDENTIFIER LBRACKET assignment_expressions RBRACKET COLON ASSIGN_EQUAL assignment_expressions
+//d[k] := v
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI
@@ -73,13 +76,9 @@ if_else_statement ::= ELSE body |
 
 
 break_statement ::= BREAK | BREAK NUMBER   //the ambiguity here is that when break is outside the loop how would we realize
+loop_statement ::= LOOP body POOL
 
-//loop_body ::= body b
-
-loop_statement ::= LOOP body
-
-//if statement
-//loop statement
+boolean_operations ::= 
 
 
 
