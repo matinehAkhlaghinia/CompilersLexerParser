@@ -1,7 +1,22 @@
 
 %%
 %class Lexer
+%unicode
+%cup
+%line
+%column
 %standalone
+
+
+%{
+  StringBuffer string = new StringBuffer();
+  private Symbol symbol(int type) {
+    return new Symbol(type, yyline, yycolumn);
+  }
+  private Symbol symbol(int type, Object value) {
+    return new Symbol(type, yyline, yycolumn, value);
+  }
+%}
 
 //Characters
 Letter = [a-zA-Z]
