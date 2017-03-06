@@ -7,7 +7,7 @@
 %column
 %standalone
 
-
+// semi, column, operators on numbers, lparen, rparen, char, 
 %{
   StringBuffer string = new StringBuffer();
   private Symbol symbol(int type) {
@@ -25,41 +25,111 @@ LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
 WhiteSpace = [ \t\n]+
 
+
 //Comments
 NormalComment   = "/#" ~"#/"
 EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}?
 
 //Identifier
-//Identifier = [a-zA-Z] [a-zA-Z0-9_]*
+identifier = [a-zA-Z] [a-zA-Z0-9_]*
 
 //Identifier = [:jletter:][:jletterdigit:]*
 
 //Character
-char = \' {letter} | {Punctuation} | {Digit} \'
+character = \' {letter} | {Punctuation} | {Digit} \'
 Punctuation = " " | "!" | \" | "#" | "$" | "%" | "&" | \' | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | ">" | "=" | "?" | "@" | "[" | "]" | "^" | "_" | "`" | "{"| "¦"| "}" | "~"
 
 //Boolean
-bool = "T" | "F"
+boolean = "T" | "F"
 
 //Numbers
 posint = {Digit}*
 int = "-" {Digit}*
 ratpartone =\ {int}"_"
 rat = {ratpartone}? {int} // {int} //can these actually be negative??
-Number = {int} | {rat} | {float}
+number = {int} | {rat} | {float}
 float = {int} "." {posint}
 
 
-//Datatypes
-//Datatype = {}
+
 
 //Top
 top = (Any data type)
 
 //dict
-DictDeclaration = "dict""<"{Datatype}","{Datatype}">"
-//here shall we accept spaces or not?
+dictDeclaration = "dict""<"{Datatype}","{Datatype}">"
+seqDecalaration = "seq""<"{Datatype}">"
 %%
+
+<YYINITIAL> {
+
+  /* keywords */
+  "main"                         { return symbol(MAIN); }
+  //COMMENT DONT RETURN ANYTHING
+  {character}                    { return symbol(CHARACTER); }
+  {number}                       { return symbol(NUMBER); }
+  {boolean}                      { return symbol(BOOLEAN); }
+
+  //Data definers
+  "float"                        { return symbol(FLOAT); }
+  "int"                          { return symbol(INT); }
+  "rat"                          { return symbol(RAT); }
+  "bool"                         { return symbol(BOOL); }
+  "char"                         { return symbol(CHAR); }
+  "top"                          { return symbol(TOP); }
+  {dictDecalaration}             { return symbol(DICT); }
+  {seqDecalaration}              { return symbol(SEQ); }
+
+
+  //namings
+  {identifier}                   { return symbol(IDENTIFIER); }
+  
+  //OPERATORS
+  "="                            { return symbol(EQ); }
+  ">"                            { return symbol(GT); }
+  "<"                            { return symbol(LT); }
+  "!"                            { return symbol(NOT); }
+  "~"                            { return symbol(COMP); }
+  "?"                            { return symbol(QMARK); }
+  ":"                            { return symbol(COLON); }
+  "=="                           { return symbol(EQEQ); }
+  "::"                           { return symbol(COLONCOLON); }
+  "<="                           { return symbol(LTEQ); }
+  ">="                           { return symbol(GTEQ); }
+  "!="                           { return symbol(NOTEQ); }
+  "&&"                           { return symbol(ANDAND); }
+  "||"                           { return symbol(OROR); }
+  "--"                           { return symbol(MINUSMINUS); }
+  "+"                            { return symbol(PLUS); }
+  "-"                            { return symbol(MINUS); }
+  "*"                            { return symbol(MULT); }
+  "/"                            { return symbol(DIV); }
+  "&"                            { return symbol(AND); }
+  "|"                            { return symbol(OR); }
+  "^"                            { return symbol(POW); }
+  "%"                            { return symbol(MOD); }
+
+  "in"                           { return symbol(IN); }
+  
+  "=>"                           { return symbol(IMPLY); }
+
+
+
+  //keywords
+  "if"                        { return symbol(CLASS); }
+  "fi"                        { return symbol(CONST); }
+  "loop"                     { return symbol(CONTINUE); }
+  "pool"                           { return symbol(DO); }
+  "tdef"                       { return symbol(DOUBLE); }
+  "break"                         { return symbol(ELSE); }
+  "return"                      { return symbol(EXTENDS); }
+  "read"  
+  "alias"
+
+  //Punctuation
+
+  
+// define datatypes
 {WhiteSpace} {/* Do nothing! */}
 {Digit}+ {System.out.printf("number [%s]\n", yytext());}
 {Letter}({Letter}|{Digit})* {System.out.printf("word [%s]\n", yytext());}
