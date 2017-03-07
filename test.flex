@@ -2,24 +2,22 @@ import java_cup.runtime.*;
 
 %%
 %class Lexer
-%public
+%unicode
 %cup
 %line
 %column
 
 %{
-  StringBuilder string = new StringBuilder();
-  
-  private Symbol symbol(int type) {
-    return Symbol(type, yyline, yycolumn);
-  }
+      StringBuffer string = new StringBuffer();
 
-  private Symbol symbol(int type, Object value) {
-    return Symbol(type, yyline, yycolumn, value);
-  }
+      private Symbol symbol(int type) {
+        return new Symbol(type, yyline, yycolumn);
+      }
+      private Symbol symbol(int type, Object value) {
+        return new Symbol(type, yyline, yycolumn, value);
+      }
 %}
 
-// semi, column, operators on numbers, lparen, rparen, char, 
 
 //Characters
 Letter = [a-zA-Z]
@@ -119,17 +117,11 @@ top = (Any data type)
   //Punctuation
 
   //namings
-  {Identifier}                   { return  Symbol(sym.IDENTIFIER); }
+  {Identifier}                   { return Symbol(sym.IDENTIFIER); }
   
   {WhiteSpace} {}
   {EndOfLineComment} {}
   {NormalComment} {}
   
-// define datatypes
-//{WhiteSpace} {/* Do nothing! */}
-//{Digit}+ {System.out.printf("number [%s]\n", yytext();}
-//{Letter}({Letter}|{Digit})* {System.out.printf("word [%s]\n", yytext();}
-//{Punctuation} {System.out.printf("punctuation [%s]\n", yytext();}
-//. {System.out.printf("symbol [%s]\n", yytext();}
 
 }
