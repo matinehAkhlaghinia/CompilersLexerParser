@@ -1,0 +1,63 @@
+
+tests/open/n-c-style-if.s
+Error: Could not find or load main class SC
+tests/open/n-decl-after-statements.s
+Error: Could not find or load main class SC
+tests/open/n-empty-else.s
+Error: Could not find or load main class SC
+tests/open/n-empty-main.s
+Error: Could not find or load main class SC
+tests/open/n-func-para-type-error0.s
+Error: Could not find or load main class SC
+tests/open/n-func-return-type.s
+Error: Could not find or load main class SC
+tests/open/n-main-missing-brace.s
+Error: Could not find or load main class SC
+tests/open/n-main-return.s
+Error: Could not find or load main class SC
+tests/open/n-multiple-assignment.s
+Error: Could not find or load main class SC
+tests/open/n-nested-type-def0.s
+Error: Could not find or load main class SC
+tests/open/n-no-main.s
+Error: Could not find or load main class SC
+tests/open/n-stray-return.s
+Error: Could not find or load main class SC
+tests/open/n-two-else.s
+Error: Could not find or load main class SC
+tests/open/p-adt.s
+Error: Could not find or load main class SC
+tests/open/p-alice.s
+Error: Could not find or load main class SC
+tests/open/p-empty-dict.s
+Error: Could not find or load main class SC
+tests/open/p-empty-seq.s
+Error: Could not find or load main class SC
+tests/open/p-fib.s
+Error: Could not find or load main class SC
+tests/open/p-fp0.s
+Error: Could not find or load main class SC
+tests/open/p-function0.s
+Error: Could not find or load main class SC
+tests/open/p-if-then-else0.s
+Error: Could not find or load main class SC
+tests/open/p-if-then-else1.s
+Error: Could not find or load main class SC
+tests/open/p-imply.s
+Error: Could not find or load main class SC
+tests/open/p-main0.s
+Error: Could not find or load main class SC
+tests/open/p-nested-loops.s
+Error: Could not find or load main class SC
+tests/open/p-rat0.s
+Error: Could not find or load main class SC
+tests/open/p-return0.s
+Error: Could not find or load main class SC
+tests/open/p-return1.s
+Error: Could not find or load main class SC
+tests/open/p-reverse.s
+Error: Could not find or load main class SC
+tests/open/p-sequences.s
+Error: Could not find or load main class SC
+tests/open/p-tdef0.s
+Error: Could not find or load main class SC
