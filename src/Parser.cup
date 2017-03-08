@@ -21,17 +21,27 @@ import java_cup.runtime.*;
 
 //Symbols (Terminal and non-terminal lists)
 
-terminal SEMI, COLON, PLUS,  MINUS, TIMES, DIVIDE, LPAREN, RPAREN, CHARACTER, IDENTIFIER, BOOL, DICT, SEQ, TDEF, IF, LOOP, FI, POOL, TOP, LCURL, RCURL, ASSIGN_EQUAL, PUNC, DATATYPE, NUMBER, ALIAS, FDEF, THEN, ELSE, BREAK, LBRACKET, RBRACKET, EXCLAM, AND, OR, IMPLY, SMALLER, SMALLER_EQ, EQUAL, NOTEQUAL, IN
+terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, EXCLAM;
+terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP;
+terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
+terminal IDENTIFIER;
+terminal PLUS,  MINUS, TIMES, DIVIDE;
+terminal ASSIGN_EQUAL, SMALLER, SMALLER_EQ, EQUAL, NOTEQUAL;
+terminal AND, OR, IMPLY;
+
 
 ///
 
-non-terminal expr
+non terminal statements, body, declaration, expression, decleration_assignment, dictionary_binding, typeDefinition, objectArray;
+non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
+non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation;
 
 
 
 //Precedence declaration
 
 precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE, MOD;
 
 
 
@@ -39,7 +49,7 @@ precedence left PLUS, MINUS;
 
 //number ::= FLOAT | RAT | INT
 
-statements ::= declaration | decleration_assignment | break_statement | .... ///the body of the functions
+statements ::= declaration | decleration_assignment | break_statement  ///the body of the functions
 
 body ::= body statements | 
 
@@ -65,6 +75,9 @@ parameter ::= DATATYPE IDENTIFIER parameterTail
 
 parameterTail ::= PUNC parameter | 
 
+
+//function decleration
+//fucntion use
 
 function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL body RCURL returnType SEMI ////do we need to consider space?
 
@@ -99,7 +112,7 @@ boolean_operations ::= EXCLAM expression
 		           | 
 		           expression IMPLY expression
 
-in, ::, s[i],
+//in, ::, s[i],
 sequence ::= IDENTIFIER LBRACKET sequenceTail RBRACKET | DATATYPE IN DATATYPE | DATATYPE COLON DATATYPE  
 
 sequenceTail ::= IDENTIFIER COLON IDENTIFIER | IDENTIFIER COLON | COLON IDENTIFIER 
