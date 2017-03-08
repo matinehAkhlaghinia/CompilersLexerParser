@@ -123,9 +123,9 @@ sequenceTail ::= IDENTIFIER COLON IDENTIFIER | IDENTIFIER COLON | COLON IDENTIFI
 
 in ::= DATATYPE IN sequence | DATATYPE IN dictionary
 
-concat ::= SEQ COLONCOLON SEQ concat_tail | IDENTIFIER COLONCOLON IDENTIFIER 
-concat_tail ::= COLONCOLON SEQ concat_tail | 
-s1 :: s2 :: [1,2]
+concat ::= SEQ COLONCOLON SEQ concat_tail | IDENTIFIER COLONCOLON IDENTIFIER concat_tail
+concat_tail ::= COLONCOLON SEQ concat_tail |  COLONCOLON IDENTIFIER concat_tail |
+
 
 //one of the amguities is + coming before negative numbers
 
