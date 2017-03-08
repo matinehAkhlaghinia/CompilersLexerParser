@@ -84,6 +84,16 @@ statements ::= declaration
 		   declaration_assignment 
 		   | 
 		   break_statement
+		   |
+           dictionary_binding
+           |
+           if_statement
+           |
+           if_else_statement
+           |
+           loop_statement
+           |
+           return_
 		   ;  ///the body of the functions
 
 
@@ -92,9 +102,7 @@ body ::= body statements
 	 ;
 
 
-declaration ::= IDENTIFIER COLON data_type |  IDENTIFIER COLON data_type SEMI;
-
-expression ::= data 
+expression ::= data    //an ambiguity can be assigning empty to a variable? what would happern?
 		   | 
 		   function_call
 		   | 
@@ -103,11 +111,29 @@ expression ::= data
 		   comparison 
 		   | 
 		   IDENTIFIER
-		   ;       //we should add this to ambiguities that we can assign functions in declarations
+		   |
+		   dictionary
+		   |
+		   sequence
+		   |
+		   comparison
+		   |
+		   equality
+		   |
+		   boolean_operations
+		   |
+		   in
+		   |
+		   sequenceSlicing
+		   |
+		   concat
+		   ;       
 
-declaration_assignment ::= declaration COLONEQ expression; //define data imo the data should be passed from the lexer 
+declaration ::= IDENTIFIER COLON data_type SEMI | IDENTIFIER COLON data_type;  //we should add this to ambiguities that we can assign functions in declarations
 
-dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression;
+declaration_assignment ::= declaration COLONEQ expression SEMI; //define data imo the data should be passed from the lexer 
+
+dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
 
 dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
@@ -134,7 +160,6 @@ alias ::= ALIAS data_type IDENTIFIER SEMI
 
 
 parameter ::= data_type IDENTIFIER parameterTail; 
-
 parameterTail ::= COMMA parameter 
 			  | 
 			  ;
