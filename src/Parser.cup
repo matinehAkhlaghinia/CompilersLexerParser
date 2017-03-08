@@ -17,7 +17,9 @@ import java_cup.runtime.*;
 // scan with {: return s.next_token(); :};
 
 parser code  {: 
+  public boolean syntaxErrors = false;
   public void syntax_error(Symbol current_token) {
+  	  syntaxErrors = true;
       report_error( "Syntax error at line " + (current_token.left+1) + ", column " + current_token.right, null);
       }
 :};
