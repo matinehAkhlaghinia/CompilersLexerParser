@@ -4,7 +4,7 @@ import java_cup.runtime.*;
 
 
 
-//User code components (Linking with the lexer)
+// //User code components (Linking with the lexer)
 
 // parser code {:
 //     // Connect this parser to a scanner!
@@ -12,10 +12,27 @@ import java_cup.runtime.*;
 //     Parser(scanner s){ this.s=s; }
 // :}
 
-//  define how to connect to the scanner! 
+// //  define how to connect to the scanner! 
 // init with {: s.init(); :};
 // scan with {: return s.next_token(); :};
 
+parser code  {: 
+  public void report_error(String message, Object info) {
+    StringBuilder m = new StringBuilder("Error ");
+
+    if (info instanceof java_cup.runtime.Symbol) 
+      m.append( "("+info.toString()+")" );
+     
+    m.append(" : "+message);
+   
+    System.out.println(m);
+  }
+   
+  public void report_fatal_error(String message, Object info) {
+    report_error(message, info);
+    throw new RuntimeException("Fatal Syntax Error");
+  }
+:};
 
 
 
@@ -34,7 +51,8 @@ terminal AND, OR, IMPLY;
 
 non terminal statements, body, declaration, expression, decleration_assignment, dictionary_binding, typeDefinition, objectArray;
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
-non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation;
+non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
+non terminal dictionary, dict_element, seq_element, in;
 
 
 
@@ -49,66 +67,107 @@ precedence left TIMES, DIVIDE, MOD;
 
 //number ::= FLOAT | RAT | INT
 
-statements ::= declaration | decleration_assignment | break_statement  ///the body of the functions
+statements ::= declaration 
+		   | 
+		   decleration_assignment 
+		   | 
+		   break_statement
+		   ;  ///the body of the functions
 
 
-body ::= body statements | 
+body ::= body statements 
+	 | 
+	 ;
 
 
-declaration ::= IDENTIFIER COLON DATATYPE SEMI
+decleration ::= IDENTIFIER COLON DATATYPE SEMI;
 
-expression ::= DATA | function | operation | comparison | IDENTIFIER       //we should add this to ambiguities that we can assign functions in declerations
+expression ::= DATA 
+		   | 
+		   function 
+		   | 
+		   operation 
+		   | 
+		   comparison 
+		   | 
+		   IDENTIFIER
+		   ;       //we should add this to ambiguities that we can assign functions in declerations
 
-decleration_assignment ::= declaration ASSIGN_EQUAL expression //define data imo the data should be passed from the lexer 
+declaration_assignment ::= declaration ASSIGN_EQUAL expression; //define data imo the data should be passed from the lexer 
 
-dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON ASSIGN_EQUAL expression
+dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON ASSIGN_EQUAL expression;
 
-dictionary ::= LCURL dict_element RCURL
-dict_element ::= DATATYPE COLON DATATYPE PUNC dict_element | 
+dictionary ::= LCURL dict_element RCURL;
+dict_element ::= DATATYPE COLON DATATYPE PUNC dict_element
+			 | 
+			 ;
 
-sequence ::=  LBRACKET seq_element RBRACKET
-seq_element ::= DATATYPE PUNC seq_element | 
-
-
-typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI
-objectArray ::= IDENTIFIER COLON DATATYPE PUNC objectArray | IDENTIFIER COLON dataType SEMI
-
-
-alias ::= ALIAS DATATYPE IDENTIFIER SEMI | ALIAS IDENTIFIER IDENTIFIER SEMI
-
-
-parameter ::= DATATYPE IDENTIFIER parameterTail 
-
-parameterTail ::= PUNC parameter | 
-
-
-//function decleration
-//fucntion use
-
-function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL body RCURL returnType SEMI ////do we need to consider space?
-
-returnType ::= COLON DATATYPE |
+sequence ::=  LBRACKET seq_element RBRACKET;
+seq_element ::= DATATYPE PUNC seq_element
+			|
+			;
 
 
-if_statement ::= IF LPAREN expression RPAREN THEN body if_else_statement FI
+typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
+objectArray ::= IDENTIFIER COLON DATATYPE PUNC objectArray 
+			| 
+			IDENTIFIER COLON dataType SEMI
+			;
 
-if_else_statement ::= ELSE body |
+
+alias ::= ALIAS DATATYPE IDENTIFIER SEMI 
+      | 
+      ALIAS IDENTIFIER IDENTIFIER SEMI
+      ;
 
 
-break_statement ::= BREAK | BREAK NUMBER   //the ambiguity here is that when break is outside the loop how would we realize
-loop_statement ::= LOOP body POOL
+parameter ::= DATATYPE IDENTIFIER parameterTail; 
+
+parameterTail ::= PUNC parameter 
+			  | 
+			  ;
+
+
+// //function decleration
+// //fucntion use
+
+function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL body RCURL returnType SEMI; ////do we need to consider space?
+
+returnType ::= COLON DATATYPE 
+		   |
+		   ;
+
+
+if_statement ::= IF LPAREN expression RPAREN THEN body if_else_statement FI;
+
+if_else_statement ::= ELSE body 
+				  |
+				  ;
+
+
+break_statement ::= BREAK 
+				| 
+				BREAK NUMBER
+				;   //the ambiguity here is that when break is outside the loop how would we realize
+
+loop_statement ::= LOOP body POOL;
 
 comparison ::= NUMBER SMALLER NUMBER
  		   |
  		   NUMBER SMALLER_EQ NUMBER
+ 		   ;
  		   
 equality ::= NUMBER EQUAL NUMBER
-		 | BOOL EQUAL BOOL
-		 | NUMBER NOTEQUAL NUMBER
-		 | BOOL NOTEQUAL BOOL
+		 | 
+		 BOOL EQUAL BOOL
+		 | 
+		 NUMBER NOTEQUAL NUMBER
+		 | 
+		 BOOL NOTEQUAL BOOL
+		 ;
 
 
-//We need to think about this case bool a = 2
+// //We need to think about this case bool a = 2
 boolean_operations ::= EXCLAM expression 
 		   		   | 
 		   		   expression AND expression
@@ -116,15 +175,38 @@ boolean_operations ::= EXCLAM expression
 		           expression OR expression
 		           | 
 		           expression IMPLY expression
+		           ;
 
-//::, s[i]
-sequence ::= IDENTIFIER LBRACKET sequenceTail RBRACKET | DATATYPE IN DATATYPE | DATATYPE COLON DATATYPE  
-sequenceTail ::= IDENTIFIER COLON IDENTIFIER | IDENTIFIER COLON | COLON IDENTIFIER
 
-in ::= DATATYPE IN sequence | DATATYPE IN dictionary
+sequence ::= IDENTIFIER LBRACKET sequenceTail RBRACKET 
+         | 
+         DATATYPE IN DATATYPE 
+         | 
+         DATATYPE COLON DATATYPE
+         ;
 
-concat ::= SEQ COLONCOLON SEQ concat_tail | IDENTIFIER COLONCOLON IDENTIFIER concat_tail
-concat_tail ::= COLONCOLON SEQ concat_tail |  COLONCOLON IDENTIFIER concat_tail |
+sequenceTail ::= IDENTIFIER COLON IDENTIFIER 
+             | 
+             IDENTIFIER COLON 
+             | 
+             COLON IDENTIFIER
+             ;
+
+in ::= DATATYPE IN sequence 
+   | 
+   DATATYPE IN dictionary
+   ;
+
+concat ::= SEQ COLONCOLON SEQ concat_tail 
+       | 
+       IDENTIFIER COLONCOLON IDENTIFIER concat_tail
+       ;
+
+concat_tail  ::= COLONCOLON SEQ concat_tail 
+            |  
+            COLONCOLON IDENTIFIER concat_tail 
+            |
+            ;
 
 
 //one of the amguities is + coming before negative numbers
@@ -143,6 +225,6 @@ operation  ::= operation PLUS operation
 	      | 
           MINUS operation             
 	      | 
-
-          LPAREN operation RPAREN     
+          LPAREN operation RPAREN
+          ;     
 
