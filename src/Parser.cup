@@ -28,7 +28,7 @@ parser code  {:
 
 //Symbols (Terminal and non-terminal lists)
 
-terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, NOT, COMMA, COLONCOLON;
+terminal SEMI, COLON, LPAREN, RPAREN, COMMA, LCURL, RCURL, LBRACKET, RBRACKET, NOT, COMMA, COLONCOLON;
 terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP, BOOLEAN, RAT, INT, FLOAT, CHAR;
 terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
 terminal IDENTIFIER;
@@ -95,18 +95,18 @@ declaration_assignment ::= declaration ASSIGN_EQUAL expression; //define data im
 dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON ASSIGN_EQUAL expression;
 
 dictionary ::= LCURL dict_element RCURL;
-dict_element ::= DATATYPE COLON DATATYPE PUNC dict_element
+dict_element ::= DATATYPE COLON DATATYPE COMMA dict_element
 			 | 
 			 ;
 
 sequence ::=  LBRACKET seq_element RBRACKET;
-seq_element ::= DATATYPE PUNC seq_element
+seq_element ::= DATATYPE COMMA seq_element
 			|
 			;
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
-objectArray ::= IDENTIFIER COLON DATATYPE PUNC objectArray 
+objectArray ::= IDENTIFIER COLON DATATYPE COMMA objectArray 
 			| 
 			IDENTIFIER COLON DATATYPE SEMI
 			;
@@ -120,7 +120,7 @@ alias ::= ALIAS DATATYPE IDENTIFIER SEMI
 
 parameter ::= DATATYPE IDENTIFIER parameterTail; 
 
-parameterTail ::= PUNC parameter 
+parameterTail ::= COMMA parameter 
 			  | 
 			  ;
 

@@ -11,11 +11,11 @@ import java_cup.runtime.*;
   StringBuilder string = new StringBuilder();
   
   private Symbol symbol(int type) {
-    return Symbol(type, yyline, yycolumn);
+    return  new Symbol(type, yyline, yycolumn);
   }
 
   private Symbol symbol(int type, Object value) {
-    return Symbol(type, yyline, yycolumn, value);
+    return new Symbol(type, yyline, yycolumn, value);
   }
 %}
 
