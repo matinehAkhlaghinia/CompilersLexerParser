@@ -39,12 +39,13 @@ parser code  {:
 //Symbols (Terminal and non-terminal lists)
 
 terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, EXCLAM, COMMA, COLONCOLON;
-terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP;
+terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP, BOOLEAN, RAT, INT, FLOAT;
 terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
 terminal IDENTIFIER;
 terminal PLUS,  MINUS, TIMES, DIVIDE, MOD;
 terminal ASSIGN_EQUAL, SMALLER, SMALLER_EQ, EQUAL, NOTEQUAL;
 terminal AND, OR, IMPLY;
+terminal RETURN;
 
 
 ///
@@ -52,8 +53,7 @@ terminal AND, OR, IMPLY;
 non terminal statements, body, declaration, expression, decleration_assignment, dictionary_binding, typeDefinition, objectArray;
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
-non terminal dictionary, dict_element, seq_element, in;
-
+non terminal dictionary, dict_element, seq_element, in, data;
 
 
 //Precedence declaration
@@ -66,6 +66,12 @@ precedence left TIMES, DIVIDE, MOD;
 //Grammar (context-free)
 
 //number ::= FLOAT | RAT | INT
+data ::= NUMBER
+	 |
+	 CHARACTER
+	 |
+	 BOOLEAN
+	 ;
 
 statements ::= declaration 
 		   | 
@@ -82,7 +88,7 @@ body ::= body statements
 
 decleration ::= IDENTIFIER COLON DATATYPE SEMI;
 
-expression ::= DATA 
+expression ::= data 
 		   | 
 		   function 
 		   | 
@@ -111,7 +117,7 @@ seq_element ::= DATATYPE PUNC seq_element
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
 objectArray ::= IDENTIFIER COLON DATATYPE PUNC objectArray 
 			| 
-			IDENTIFIER COLON dataType SEMI
+			IDENTIFIER COLON DATATYPE SEMI
 			;
 
 
