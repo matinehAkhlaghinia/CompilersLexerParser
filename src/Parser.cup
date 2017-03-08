@@ -21,12 +21,7 @@ import java_cup.runtime.*;
 
 //Symbols (Terminal and non-terminal lists)
 
-<<<<<<< HEAD
 terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, EXCLAM, COMMA, COLONCOLON;
-=======
-
-terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, EXCLAM;
->>>>>>> origin/master
 terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP;
 terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
 terminal IDENTIFIER;
