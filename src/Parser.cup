@@ -94,10 +94,11 @@ statements ::= declaration
            loop_statement
            |
            return_
+           |
 		   ;  ///the body of the functions
 
 
-body ::= body statements 
+body ::= statements body
 	 | 
 	 ;
 
@@ -140,7 +141,7 @@ dict_element ::= data_type COLON data_type COMMA dict_element
 			 | 
 			 ;
 
-sequence ::=  LBRACKET seq_element RBRACKET SEMI;
+sequence ::=  LBRACKET seq_element RBRACKET;
 seq_element ::= data_type COMMA seq_element
 			|
 			;
