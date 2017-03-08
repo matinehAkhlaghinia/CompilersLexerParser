@@ -21,12 +21,11 @@ import java_cup.runtime.*;
 
 //Symbols (Terminal and non-terminal lists)
 
-
-terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, EXCLAM;
+terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, EXCLAM, COMMA, COLONCOLON;
 terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP;
 terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
 terminal IDENTIFIER;
-terminal PLUS,  MINUS, TIMES, DIVIDE;
+terminal PLUS,  MINUS, TIMES, DIVIDE, MOD;
 terminal ASSIGN_EQUAL, SMALLER, SMALLER_EQ, EQUAL, NOTEQUAL;
 terminal AND, OR, IMPLY;
 
@@ -63,7 +62,12 @@ expression ::= DATA | function | operation | comparison | IDENTIFIER       //we 
 decleration_assignment ::= declaration ASSIGN_EQUAL expression //define data imo the data should be passed from the lexer 
 
 dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON ASSIGN_EQUAL expression
-//d[k] := v
+
+dictionary ::= LCURL dict_element RCURL
+dict_element ::= DATATYPE COLON DATATYPE PUNC dict_element | 
+
+sequence ::=  LBRACKET seq_element RBRACKET
+seq_element ::= DATATYPE PUNC seq_element | 
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI
@@ -113,11 +117,15 @@ boolean_operations ::= EXCLAM expression
 		           | 
 		           expression IMPLY expression
 
-//in, ::, s[i],
+//::, s[i]
 sequence ::= IDENTIFIER LBRACKET sequenceTail RBRACKET | DATATYPE IN DATATYPE | DATATYPE COLON DATATYPE  
+sequenceTail ::= IDENTIFIER COLON IDENTIFIER | IDENTIFIER COLON | COLON IDENTIFIER
 
-sequenceTail ::= IDENTIFIER COLON IDENTIFIER | IDENTIFIER COLON | COLON IDENTIFIER 
+in ::= DATATYPE IN sequence | DATATYPE IN dictionary
 
+concat ::= SEQ COLONCOLON SEQ concat_tail | IDENTIFIER COLONCOLON IDENTIFIER 
+concat_tail ::= COLONCOLON SEQ concat_tail | 
+s1 :: s2 :: [1,2]
 
 //one of the amguities is + coming before negative numbers
 
