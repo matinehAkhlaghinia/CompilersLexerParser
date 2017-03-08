@@ -93,6 +93,7 @@ seqDeclaration = "seq""<"{datatype}">"
   
   //OPERATORS
   "="                            { return symbol(sym.EQ); }
+  ":="                            { return symbol(sym.COLONEQ); }
   "<"                            { return symbol(sym.LT); }
   "!"                            { return symbol(sym.NOT); }
   "?"                            { return symbol(sym.QMARK); }
@@ -111,6 +112,10 @@ seqDeclaration = "seq""<"{datatype}">"
   "in"                           { return symbol(sym.IN); }
   "=>"                           { return symbol(sym.IMPLY); }
   ","                            { return symbol(sym.COMMA); }
+  "{"                            { return symbol(sym.LCURL); }
+  "}"                            { return symbol(sym.RCURL); }
+  "("                            { return symbol(sym.LPAREN); }
+  ")"                            { return symbol(sym.RPAREN); }
 
   //Punctuation
 

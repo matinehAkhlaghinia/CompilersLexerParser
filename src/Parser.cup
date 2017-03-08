@@ -29,11 +29,11 @@ parser code  {:
 //Symbols (Terminal and non-terminal lists)
 
 terminal SEMI, COLON, LPAREN, RPAREN, COMMA, LCURL, RCURL, LBRACKET, RBRACKET, NOT, COLONCOLON;
-terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP, BOOLEAN, RAT, INT, FLOAT, CHAR;
+terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, TOP, BOOLEAN, RAT, INT, FLOAT, CHAR;
 terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
 terminal IDENTIFIER;
 terminal PLUS,  MINUS, TIMES, DIV, MOD;
-terminal ASSIGN_EQUAL, LT, LTEQ, EQ, NOTEQ;
+terminal COLONEQ, LT, LTEQ, EQ, NOTEQ;
 terminal AND, OR, IMPLY;
 terminal RETURN, MAIN, READ, FUNCTION, POW;
 terminal QMARK;
@@ -44,7 +44,7 @@ terminal QMARK;
 non terminal statements, body, declaration, expression, declaration_assignment, dictionary_binding, typeDefinition, objectArray;
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
-non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing;
+non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params;
 
 
 //Precedence declaration
@@ -64,6 +64,21 @@ data ::= NUMBER
 	 BOOLEAN
 	 ;
 
+data_type ::= SEQ 
+          | 
+          DICT //this might be an issue
+          |
+          INT
+          |
+          FLOAT
+          |
+          RAT
+          |
+          BOOL
+          |
+          CHAR
+          ;
+
 statements ::= declaration 
 		   | 
 		   declaration_assignment 
@@ -77,11 +92,11 @@ body ::= body statements
 	 ;
 
 
-declaration ::= IDENTIFIER COLON DATATYPE SEMI;
+declaration ::= IDENTIFIER COLON data_type |  IDENTIFIER COLON data_type SEMI;
 
 expression ::= data 
 		   | 
-		   function 
+		   function_call
 		   | 
 		   operation 
 		   | 
@@ -90,35 +105,35 @@ expression ::= data
 		   IDENTIFIER
 		   ;       //we should add this to ambiguities that we can assign functions in declarations
 
-declaration_assignment ::= declaration ASSIGN_EQUAL expression; //define data imo the data should be passed from the lexer 
+declaration_assignment ::= declaration COLONEQ expression; //define data imo the data should be passed from the lexer 
 
-dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON ASSIGN_EQUAL expression;
+dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression;
 
 dictionary ::= LCURL dict_element RCURL;
-dict_element ::= DATATYPE COLON DATATYPE COMMA dict_element
+dict_element ::= data_type COLON data_type COMMA dict_element
 			 | 
 			 ;
 
-sequence ::=  LBRACKET seq_element RBRACKET;
-seq_element ::= DATATYPE COMMA seq_element
+sequence ::=  LBRACKET seq_element RBRACKET SEMI;
+seq_element ::= data_type COMMA seq_element
 			|
 			;
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
-objectArray ::= IDENTIFIER COLON DATATYPE COMMA objectArray 
+objectArray ::= IDENTIFIER COLON data_type COMMA objectArray 
 			| 
-			IDENTIFIER COLON DATATYPE SEMI
+			IDENTIFIER COLON data_type SEMI
 			;
 
 
-alias ::= ALIAS DATATYPE IDENTIFIER SEMI 
+alias ::= ALIAS data_type IDENTIFIER SEMI 
       | 
       ALIAS IDENTIFIER IDENTIFIER SEMI
       ;
 
 
-parameter ::= DATATYPE IDENTIFIER parameterTail; 
+parameter ::= data_type IDENTIFIER parameterTail; 
 
 parameterTail ::= COMMA parameter 
 			  | 
@@ -128,9 +143,16 @@ parameterTail ::= COMMA parameter
 // //function declaration
 // //fucntion use
 
+function_call ::= IDENTIFIER LPAREN params RPAREN SEMI;
+
+params ::= expression COMMA params 
+       | expression 
+       |
+       ;
+
 function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL body RCURL returnType SEMI; ////do we need to consider space?
 
-returnType ::= COLON DATATYPE 
+returnType ::= COLON data_type 
 		   |
 		   ;
 
@@ -176,16 +198,16 @@ boolean_operations ::= NOT expression
 
 
 
-in ::= DATATYPE IN sequence 
+in ::= data_type IN sequence 
    | 
-   DATATYPE IN dictionary
+   data_type IN dictionary
    ;
 
 sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET 
          | 
-         DATATYPE IN DATATYPE 
+         data_type IN data_type 
          | 
-         DATATYPE COLON DATATYPE
+         data_type COLON data_type
          ;
 
 sequenceTail ::= IDENTIFIER COLON IDENTIFIER 
@@ -206,6 +228,12 @@ concat_tail  ::= COLONCOLON SEQ concat_tail
             |
             ;
 
+main ::= MAIN LCURL body RCURL SEMI;
+
+return_ ::= RETURN SEMI
+        | 
+        RETURN expression SEMI
+        ;
 
 //one of the amguities is + coming before negative numbers
 
