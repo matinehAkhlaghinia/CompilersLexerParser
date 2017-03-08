@@ -11,6 +11,12 @@ main {
 	print ?T?foo( 13 );
 	return;
 };
+/# yolo 123 
+quack
+#/
+
+//trolololol
+
 
 fdef add (x:int, y:int) {
 	return x + y;
