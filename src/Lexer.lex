@@ -6,6 +6,7 @@ import java_cup.runtime.*;
 %cup
 %line
 %column
+
 %{
   StringBuilder string = new StringBuilder();
   
@@ -81,9 +82,9 @@ seqDeclaration = "seq""<"{datatype}">"
 
   //keywords
   "if"                           { return symbol(sym.IF); }
-  "fi"                           { return symbol(sym.ENDIF); }
+  "fi"                           { return symbol(sym.FI); }
   "loop"                         { return symbol(sym.LOOP); }
-  "pool"                         { return symbol(sym.ENDLOOP); }
+  "pool"                         { return symbol(sym.POOL); }
   "tdef"                         { return symbol(sym.FUNCTION); }
   "break"                        { return symbol(sym.BREAK); }
   "return"                       { return symbol(sym.RETURN); }
@@ -92,26 +93,19 @@ seqDeclaration = "seq""<"{datatype}">"
   
   //OPERATORS
   "="                            { return symbol(sym.EQ); }
-  ">"                            { return symbol(sym.GT); }
   "<"                            { return symbol(sym.LT); }
   "!"                            { return symbol(sym.NOT); }
-  "~"                            { return symbol(sym.COMP); }
   "?"                            { return symbol(sym.QMARK); }
   ":"                            { return symbol(sym.COLON); }
-  "=="                           { return symbol(sym.EQEQ); }
   "::"                           { return symbol(sym.COLONCOLON); }
   "<="                           { return symbol(sym.LTEQ); }
-  ">="                           { return symbol(sym.GTEQ); }
   "!="                           { return symbol(sym.NOTEQ); }
-  "&&"                           { return symbol(sym.ANDAND); }
-  "||"                           { return symbol(sym.OROR); }
-  "--"                           { return symbol(sym.MINUSMINUS); }
+  "&&"                           { return symbol(sym.AND); }
+  "||"                           { return symbol(sym.OR); }
   "+"                            { return symbol(sym.PLUS); }
   "-"                            { return symbol(sym.MINUS); }
-  "*"                            { return symbol(sym.MULT); }
+  "*"                            { return symbol(sym.TIMES); }
   "/"                            { return symbol(sym.DIV); }
-  "&"                            { return symbol(sym.AND); }
-  "|"                            { return symbol(sym.OR); }
   "^"                            { return symbol(sym.POW); }
   "%"                            { return symbol(sym.MOD); }
   "in"                           { return symbol(sym.IN); }

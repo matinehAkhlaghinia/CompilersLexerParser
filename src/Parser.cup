@@ -1,4 +1,4 @@
-//Package and import declerations
+//Package and import declarations
 import java_cup.runtime.*;
 
 
@@ -17,40 +17,29 @@ import java_cup.runtime.*;
 // scan with {: return s.next_token(); :};
 
 parser code  {: 
-  public void report_error(String message, Object info) {
-    StringBuilder m = new StringBuilder("Error ");
-
-    if (info instanceof java_cup.runtime.Symbol) 
-      m.append( "("+info.toString()+")" );
-     
-    m.append(" : "+message);
-   
-    System.out.println(m);
-  }
-   
-  public void report_fatal_error(String message, Object info) {
-    report_error(message, info);
-    throw new RuntimeException("Fatal Syntax Error");
-  }
+  public void syntax_error(Symbol current_token) {
+      report_error( "Syntax error at line " + (current_token.left+1) + ", column " + current_token.right, null);
+      }
 :};
 
 
 
 //Symbols (Terminal and non-terminal lists)
 
-terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, EXCLAM, COMMA, COLONCOLON;
-terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP, BOOLEAN, RAT, INT, FLOAT;
+terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, NOT, COMMA, COLONCOLON;
+terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP, BOOLEAN, RAT, INT, FLOAT, CHAR;
 terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
 terminal IDENTIFIER;
-terminal PLUS,  MINUS, TIMES, DIVIDE, MOD;
-terminal ASSIGN_EQUAL, SMALLER, SMALLER_EQ, EQUAL, NOTEQUAL;
+terminal PLUS,  MINUS, TIMES, DIV, MOD;
+terminal ASSIGN_EQUAL, LT, LTEQ, EQ, NOTEQ;
 terminal AND, OR, IMPLY;
-terminal RETURN;
+terminal RETURN, MAIN, READ, FUNCTION, POW;
+terminal QMARK;
 
 
 ///
 
-non terminal statements, body, declaration, expression, decleration_assignment, dictionary_binding, typeDefinition, objectArray;
+non terminal statements, body, declaration, expression, declaration_assignment, dictionary_binding, typeDefinition, objectArray;
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data;
@@ -59,7 +48,7 @@ non terminal dictionary, dict_element, seq_element, in, data;
 //Precedence declaration
 
 precedence left PLUS, MINUS;
-precedence left TIMES, DIVIDE, MOD;
+precedence left TIMES, DIV, MOD;
 
 
 
@@ -75,7 +64,7 @@ data ::= NUMBER
 
 statements ::= declaration 
 		   | 
-		   decleration_assignment 
+		   declaration_assignment 
 		   | 
 		   break_statement
 		   ;  ///the body of the functions
@@ -86,7 +75,7 @@ body ::= body statements
 	 ;
 
 
-decleration ::= IDENTIFIER COLON DATATYPE SEMI;
+declaration ::= IDENTIFIER COLON DATATYPE SEMI;
 
 expression ::= data 
 		   | 
@@ -97,7 +86,7 @@ expression ::= data
 		   comparison 
 		   | 
 		   IDENTIFIER
-		   ;       //we should add this to ambiguities that we can assign functions in declerations
+		   ;       //we should add this to ambiguities that we can assign functions in declarations
 
 declaration_assignment ::= declaration ASSIGN_EQUAL expression; //define data imo the data should be passed from the lexer 
 
@@ -134,7 +123,7 @@ parameterTail ::= PUNC parameter
 			  ;
 
 
-// //function decleration
+// //function declaration
 // //fucntion use
 
 function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL body RCURL returnType SEMI; ////do we need to consider space?
@@ -158,23 +147,23 @@ break_statement ::= BREAK
 
 loop_statement ::= LOOP body POOL;
 
-comparison ::= NUMBER SMALLER NUMBER
+comparison ::= NUMBER LT NUMBER
  		   |
- 		   NUMBER SMALLER_EQ NUMBER
+ 		   NUMBER LTEQ NUMBER
  		   ;
  		   
-equality ::= NUMBER EQUAL NUMBER
+equality ::= NUMBER EQ NUMBER
 		 | 
-		 BOOL EQUAL BOOL
+		 BOOL EQ BOOL
 		 | 
-		 NUMBER NOTEQUAL NUMBER
+		 NUMBER NOTEQ NUMBER
 		 | 
-		 BOOL NOTEQUAL BOOL
+		 BOOL NOTEQ BOOL
 		 ;
 
 
 // //We need to think about this case bool a = 2
-boolean_operations ::= EXCLAM expression 
+boolean_operations ::= NOT expression 
 		   		   | 
 		   		   expression AND expression
 		           | 
@@ -223,7 +212,7 @@ operation  ::= operation PLUS operation
 	      | 
           operation TIMES operation 
 	      | 
-	      operation DIVIDE operation 
+	      operation DIV operation 
 	      | 
           operation MOD operation 
 	      | 
