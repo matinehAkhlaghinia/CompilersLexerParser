@@ -21,6 +21,7 @@ import java_cup.runtime.*;
 
 //Symbols (Terminal and non-terminal lists)
 
+
 terminal SEMI, COLON, LPAREN, RPAREN, PUNC, LCURL, RCURL, LBRACKET, RBRACKET, EXCLAM;
 terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, DATATYPE, TOP;
 terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
@@ -50,6 +51,7 @@ precedence left TIMES, DIVIDE, MOD;
 //number ::= FLOAT | RAT | INT
 
 statements ::= declaration | decleration_assignment | break_statement  ///the body of the functions
+
 
 body ::= body statements | 
 
@@ -96,7 +98,6 @@ comparison ::= NUMBER SMALLER NUMBER
  		   |
  		   NUMBER SMALLER_EQ NUMBER
  		   
-
 equality ::= NUMBER EQUAL NUMBER
 		 | BOOL EQUAL BOOL
 		 | NUMBER NOTEQUAL NUMBER
@@ -134,7 +135,6 @@ operation  ::= operation PLUS operation
 	      | 
           MINUS operation             
 	      | 
+
           LPAREN operation RPAREN     
-
-
 
