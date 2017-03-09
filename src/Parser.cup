@@ -45,7 +45,7 @@ non terminal statements, body, declaration, expression, declaration_assignment, 
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params;
-non terminal main, initial, dec, arr, seq, assignment;
+non terminal main, initial, dec, arr, seq, assignment, dict;
 
 
 //Precedence declaration
@@ -87,7 +87,7 @@ parameterTail ::= COMMA parameter
 
 data_type ::= seq
           |
-          DICT //this might be an issue
+          dict //this might be an issue
           |
           INT
           |
@@ -130,20 +130,18 @@ expression ::= data expression //an ambiguity can be assigning empty to a variab
 
 data ::= NUMBER | CHARACTER | BOOLEAN;
 
-// declaration ::= IDENTIFIER COLON data_type dec;
-// dec::= SEMI
-//    |
-//    ;  //we should add this to ambiguities that we can assign functions in declarations
+declaration ::= IDENTIFIER COLON data_type dec;
+dec::= SEMI |;  //we should add this to ambiguities that we can assign functions in declarations
 
-// declaration_assignment ::= declaration COLONEQ expression SEMI;
+declaration_assignment ::= declaration COLONEQ expression SEMI;
 assignment ::= IDENTIFIER COLONEQ IDENTIFIER SEMI | IDENTIFIER COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
 
 // dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
 
-// dictionary ::= LCURL dict_element RCURL;
-// dict_element ::= data_type COLON data_type COMMA dict_element
-// 			 |
-// 			 ;
+dictionary ::= LCURL dict_element RCURL;
+dict_element ::= data_type COLON data_type COMMA dict_element
+   		       |
+			       ;
 
 // sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
 // seq_element ::= data_type COMMA seq_element
@@ -160,7 +158,7 @@ arr ::= COMMA objectArray
 
 
 
-alias ::= ALIAS data_type IDENTIFIER SEMI 
+alias ::= ALIAS data_type IDENTIFIER SEMI
       |
       ALIAS IDENTIFIER IDENTIFIER SEMI
       ;
@@ -245,6 +243,9 @@ return_ ::= RETURN SEMI
         |
         RETURN expression SEMI
         ;
+
+
+dict ::= DICT LT data_type COMMA data_type GT;
 
 // //one of the amguities is + coming before negative numbers
 
