@@ -69,14 +69,14 @@ program_block ::= statements;
 
 
 
-function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
+/*function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
 
 returnType ::= COLON data_type
                 | ;
 
 parameter ::= IDENTIFIER COLON data_type parameterTail;
 parameterTail ::= COMMA parameter
-                | ;
+                | ;*/
 
 data_type ::= seq
           | dict
@@ -141,11 +141,11 @@ alias ::= ALIAS data_type IDENTIFIER SEMI
 // // //function declaration
 // // //fucntion use
 
-function_call ::= IDENTIFIER LPAREN params RPAREN SEMI;
+/*function_call ::= IDENTIFIER LPAREN params RPAREN SEMI;
 
 params ::= expression COMMA params
        | expression
-       |;
+       |;*/
 
 if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI
              | IF LPAREN expression RPAREN THEN statements FI;
