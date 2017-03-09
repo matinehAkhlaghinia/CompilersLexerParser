@@ -3,7 +3,6 @@
 import java_cup.runtime.*;
 
 %%
-
 %class Lexer
 %unicode
 %line
@@ -21,31 +20,36 @@ import java_cup.runtime.*;
     }
 %}
 
-Letter = [A-Za-z]
-Digit = [0-9]
-Punctuation = [!\"#\$%&\'()\*\+\,\-\.\/:;<=>\?@\[\]\\\^_`{}\~¦]
+
+//Characters
+Letter = [a-zA-Z] 
+Digit = [0-9] 
+LineTerminator = \r|\n|\r\n 
+InputCharacter = [^\r\n] 
+WhiteSpace = {LineTerminator} | [ \t\n]+
+
 Character = '{Letter}' | '{Punctuation}' | '{Digit}'
+Punctuation = [!\"#\$%&\'()\*\+\,\-\.\/:;<=>\?@\[\]\\\^_`{}\~¦]
 
-Integer = 0|[1-9]{Digit}*
-Float = {Integer}(\.{Digit}*)?
-Rational = ({Integer}_){Digit}"/"{Digit}* | {Integer}"/"{Digit}*
-Number = {Integer} | {Rational} | {Float}
+//Comments
+NormalComment = "/#" ~"#/"
+EndOfLineComment = "#" {InputCharacter}* {LineTerminator}?
+Comment = {NormalComment} | {EndOfLineComment}
 
+//Identifier
+Identifier = [a-zA-Z] [a-zA-Z0-9_]*
+
+//Boolean
 Boolean = T | F
 
-LineTerminator = \r|\n|\r\n
-InputCharacter = [^\r\n]
-WhiteSpace     = {LineTerminator} | [ \t\f] //line terminator, space, tab, or line feed.
-
-Comment = {MultilineComment} | {EndOfLineComment}
-MultilineComment = "/#" [^#] ~"#/" | "/#" "#" + "/"
-EndOfLineComment = "#" {InputCharacter}* {LineTerminator}?
-
-AlphanumericUnderscore = {Letter} | "_" | {Digit}
-Dot = "."
-Identifier = {Letter}{AlphanumericUnderscore}*{Dot}?{AlphanumericUnderscore}*
-
-String = \"(\\.|[^\"])*\"
+//Numbers
+PositiveInteger = (0|[1-9]{Digit}*)
+StrictPositiveInteger = ([1-9]{Digit}*)
+Integer = "-"? (0|[1-9]{Digit}*)
+RatOne = {Integer}"_"
+Rational = {RatOne}? {PositiveInteger}"/"{PositiveInteger} 
+Number = {Integer} | {Rational} | {Float}
+Float = {Integer} ("."0*{StrictPositiveInteger})?
 
 
 %%
