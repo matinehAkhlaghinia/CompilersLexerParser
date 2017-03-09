@@ -79,7 +79,7 @@ parameterTail ::= COMMA parameter
                 | ;
 
 data_type ::= seq
-          | DICT 
+          | dict 
           | INT
           | FLOAT
           | RAT
@@ -99,8 +99,7 @@ expression ::= data expression //an ambiguity can be assigning empty to a variab
 		| boolean_operations
 		| in
 		| sequenceSlicing
- 	        | concat
- 		   ;
+ 	        | concat ;
 
 data ::= NUMBER | CHARACTER | BOOLEAN;
 
@@ -114,8 +113,7 @@ assignment ::= IDENTIFIER COLONEQ IDENTIFIER SEMI | IDENTIFIER COLONEQ expressio
 
 dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
-   		       |
-			       ;
+   	     | ;
 
 // sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
 // seq_element ::= data_type COMMA seq_element
@@ -132,12 +130,8 @@ arr ::= COMMA objectArray
     |
     ;
 
-
 alias ::= ALIAS data_type IDENTIFIER SEMI 
       | ALIAS IDENTIFIER IDENTIFIER SEMI ;
-
-
-
 
 // // //function declaration
 // // //fucntion use
@@ -148,18 +142,22 @@ params ::= expression COMMA params
        | expression
        |;
 
+if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI 
+             | IF LPAREN expression RPAREN THEN statements FI;
 
 
-if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI | IF LPAREN expression RPAREN THEN statements FI;
-
-
-break_statement ::= BREAK SEMI| BREAK NUMBER SEMI;   //the ambiguity here is that when break is outside the loop how would we realize
+break_statement ::= BREAK SEMI
+                | BREAK NUMBER SEMI;   //the ambiguity here is that when break is outside the loop how would we realize
 
 loop_statement ::= LOOP statements POOL;
 
-comparison ::= NUMBER LT NUMBER | NUMBER LTEQ NUMBER;
+comparison ::= NUMBER LT NUMBER
+            | NUMBER LTEQ NUMBER;
 
-equality ::= NUMBER EQ NUMBER | BOOL EQ BOOL| NUMBER NOTEQ NUMBER| BOOL NOTEQ BOOL;
+equality ::= NUMBER EQ NUMBER 
+          | BOOL EQ BOOL
+          | NUMBER NOTEQ NUMBER
+          | BOOL NOTEQ BOOL;
 
 
 // // //We need to think about this case bool a = 2
@@ -171,8 +169,7 @@ boolean_operations ::= NOT boolean_operations
 
 
 in ::= data_type IN sequence
-   |data_type IN dictionary
-   ;
+   | data_type IN dictionary ;
 
 // sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
 //          |
@@ -200,13 +197,13 @@ in ::= data_type IN sequence
 //             ;
 
 
-seq ::= SEQ LT data_type GT| SEQ LT IDENTIFIER GT;
+seq ::= SEQ LT data_type GT
+     | SEQ LT IDENTIFIER GT;
 
 main ::= MAIN LCURL statements RCURL SEMI;
 
 return_ ::= RETURN SEMI
-        |
-        RETURN expression SEMI
+        | RETURN expression SEMI
         ;
 
 
