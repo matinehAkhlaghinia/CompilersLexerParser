@@ -12,11 +12,11 @@ import java_cup.runtime.*;
 //     Parser(scanner s){ this.s=s; }
 // :}
 
-// //  define how to connect to the scanner! 
+// //  define how to connect to the scanner!
 // init with {: s.init(); :};
 // scan with {: return s.next_token(); :};
 
-parser code  {: 
+parser code  {:
   public boolean syntaxErrors = false;
   public void syntax_error(Symbol current_token) {
   	  syntaxErrors = true;
@@ -60,12 +60,12 @@ precedence left NOT, AND, OR, IMPLY;
 
 //number ::= FLOAT | RAT | INT
 
-start with initial; 
+start with initial;
 
 initial ::= function
-        | 
-        main 
-        | 
+        |
+        main
+        |
         statements
         |
         expression
@@ -79,14 +79,14 @@ returnType ::= COLON data_type
 		   |
 		   ;
 
-parameter ::= IDENTIFIER COLON data_type parameterTail; 
-parameterTail ::= COMMA parameter 
-			  | 
+parameter ::= IDENTIFIER COLON data_type parameterTail;
+parameterTail ::= COMMA parameter
+			  |
 			  ;
 
 
 data_type ::= seq
-          | 
+          |
           DICT //this might be an issue
           |
           INT
@@ -100,18 +100,18 @@ data_type ::= seq
           CHAR
           ;
 
-statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|;	    
+statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|;
 ///the body of the functions
 
 
 
 expression ::= data expression //an ambiguity can be assigning empty to a variable? what would happern?
-		   | 
+		   |
 		   function_call
-		   | 
-		   operation 
-		   | 
-		   comparison 
+		   |
+		   operation
+		   |
+		   comparison
 		   |
 		   dictionary
 		   |
@@ -128,7 +128,7 @@ expression ::= data expression //an ambiguity can be assigning empty to a variab
  		   concat
  		   ;
 
-data ::= NUMBER | CHARACTER | BOOLEAN;       
+data ::= NUMBER | CHARACTER | BOOLEAN;
 
 // declaration ::= IDENTIFIER COLON data_type dec;
 // dec::= SEMI
@@ -136,13 +136,13 @@ data ::= NUMBER | CHARACTER | BOOLEAN;
 //    ;  //we should add this to ambiguities that we can assign functions in declarations
 
 // declaration_assignment ::= declaration COLONEQ expression SEMI;
-assignment ::= IDENTIFIER COLONEQ IDENTIFIER SEMI | IDENTIFIER COLONEQ expression SEMI; //define data imo the data should be passed from the lexer 
+assignment ::= IDENTIFIER COLONEQ IDENTIFIER SEMI | IDENTIFIER COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
 
 // dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
 
 // dictionary ::= LCURL dict_element RCURL;
 // dict_element ::= data_type COLON data_type COMMA dict_element
-// 			 | 
+// 			 |
 // 			 ;
 
 // sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
@@ -161,7 +161,7 @@ arr ::= COMMA objectArray
 
 
 alias ::= ALIAS data_type IDENTIFIER SEMI 
-      | 
+      |
       ALIAS IDENTIFIER IDENTIFIER SEMI
       ;
 
@@ -173,9 +173,9 @@ alias ::= ALIAS data_type IDENTIFIER SEMI
 
 function_call ::= IDENTIFIER LPAREN params RPAREN SEMI;
 
-params ::= expression COMMA params 
-       | 
-       expression 
+params ::= expression COMMA params
+       |
+       expression
        |
        ;
 
@@ -189,7 +189,7 @@ break_statement ::= BREAK SEMI| BREAK NUMBER SEMI;   //the ambiguity here is tha
 loop_statement ::= LOOP statements POOL;
 
 comparison ::= NUMBER LT NUMBER | NUMBER LTEQ NUMBER;
- 		   
+
 equality ::= NUMBER EQ NUMBER | BOOL EQ BOOL| NUMBER NOTEQ NUMBER| BOOL NOTEQ BOOL;
 
 
@@ -197,73 +197,72 @@ equality ::= NUMBER EQ NUMBER | BOOL EQ BOOL| NUMBER NOTEQ NUMBER| BOOL NOTEQ BO
 boolean_operations ::= NOT boolean_operations
 		   		   |
 		   		   boolean_operations AND boolean_operations
-		           | 
+		           |
 		           boolean_operations OR boolean_operations
-		           | 
+		           |
 		           boolean_operations IMPLY boolean_operations
 		           |
-		           BOOLEAN 
+		           BOOLEAN
 		           ;
 
 
-in ::= data_type IN sequence 
-   | 
+in ::= data_type IN sequence
+   |
    data_type IN dictionary
    ;
 
-// sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET 
-//          | 
-//          data_type IN data_type 
-//          | 
+// sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
+//          |
+//          data_type IN data_type
+//          |
 //          data_type COLON data_type
 //          ;
 
-// sequenceTail ::= IDENTIFIER COLON IDENTIFIER 
-//              | 
-//              IDENTIFIER COLON 
-//              | 
+// sequenceTail ::= IDENTIFIER COLON IDENTIFIER
+//              |
+//              IDENTIFIER COLON
+//              |
 //              COLON IDENTIFIER
 //              ;
 
-// concat ::= SEQ COLONCOLON SEQ concat_tail 
-//        | 
+// concat ::= SEQ COLONCOLON SEQ concat_tail
+//        |
 //        IDENTIFIER COLONCOLON IDENTIFIER concat_tail
 //        ;
 
-// concat_tail  ::= COLONCOLON SEQ concat_tail 
-//             |  
-//             COLONCOLON IDENTIFIER concat_tail 
+// concat_tail  ::= COLONCOLON SEQ concat_tail
+//             |
+//             COLONCOLON IDENTIFIER concat_tail
 //             |
 //             ;
 
 
-seq ::= SEQ LT data_type GT IDENTIFIER | SEQ LT IDENTIFIER GT IDENTIFIER;
+seq ::= SEQ LT data_type GT| SEQ LT IDENTIFIER GT;
 
 main ::= MAIN LCURL statements RCURL SEMI;
 
 return_ ::= RETURN SEMI
-        | 
+        |
         RETURN expression SEMI
         ;
 
 // //one of the amguities is + coming before negative numbers
 
-// operation  ::= operation PLUS operation   
+// operation  ::= operation PLUS operation
 // 	      |
-// 	      operation MINUS operation   
-// 	      | 
-//           operation TIMES operation 
-// 	      | 
-// 	      operation DIV operation 
-// 	      | 
-//           operation MOD operation 
+// 	      operation MINUS operation
+// 	      |
+//           operation TIMES operation
+// 	      |
+// 	      operation DIV operation
+// 	      |
+//           operation MOD operation
 // 	      |
 // 	      operation POW operation
 // 	      |
-//        NUMBER                  
-// 	      | 
-//        MINUS operation             
-// 	      | 
+//        NUMBER
+// 	      |
+//        MINUS operation
+// 	      |
 //        LPAREN operation RPAREN
-//        ;     
-
+//        ;
