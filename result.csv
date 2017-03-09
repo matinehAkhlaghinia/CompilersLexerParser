@@ -1,0 +1,708 @@
+
+tests/custom/p-adt.s
+space/newline
+space/newline
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+SEMI
+space/newline
+space/newline
+space/newline
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+>
+IDENT
+<
+SEMI
+space/newline
+Syntax error at line 5, column 0Couldn't repair and continue parse at character 4 of input
+tests/open/n-c-style-if.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/open/n-decl-after-statements.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/open/n-empty-else.s
+IDENT
+IDENT
+Syntax error at line 1, column 3Couldn't repair and continue parse at character 0 of input
+tests/open/n-empty-main.s
+space/newline
+space/newline
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/open/n-func-para-type-error0.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/open/n-func-return-type.s
+space/newline
+space/newline
+Syntax error at line 2, column 1Couldn't repair and continue parse at character 1 of input
+tests/open/n-main-missing-brace.s
+space/newline
+space/newline
+Syntax error at line 2, column 2Couldn't repair and continue parse at character 1 of input
+tests/open/n-main-return.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+SEMI
+Syntax error at line 2, column 12Couldn't repair and continue parse at character 1 of input
+tests/open/n-multiple-assignment.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+SEMI
+Syntax error at line 2, column 12Couldn't repair and continue parse at character 1 of input
+tests/open/n-nested-type-def0.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+>
+<
+SEMI
+Syntax error at line 2, column 18Couldn't repair and continue parse at character 1 of input
+tests/open/n-no-main.s
+alias
+space/newline
+>
+char
+<
+space/newline
+IDENT
+SEMI
+space/newline
+IDENT
+space/newline
+IDENT
+Syntax error at line 3, column 5Couldn't repair and continue parse at character 2 of input
+tests/open/n-stray-return.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/open/n-two-else.s
+IDENT
+IDENT
+Syntax error at line 1, column 3Couldn't repair and continue parse at character 0 of input
+tests/open/p-adt.s
+space/newline
+space/newline
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+SEMI
+space/newline
+space/newline
+space/newline
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+>
+IDENT
+<
+SEMI
+space/newline
+space/newline
+Syntax error at line 6, column 0Couldn't repair and continue parse at character 5 of input
+tests/open/p-alice.s
+IDENT
+IDENT
+Syntax error at line 1, column 3Couldn't repair and continue parse at character 0 of input
+tests/open/p-empty-dict.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+<
+space/newline
+space/newline
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/open/p-empty-seq.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+char
+<
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <[>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/open/p-fib.s
+space/newline
+space/newline
+IDENT
+space/newline
+Syntax error at line 2, column 7Couldn't repair and continue parse at character 1 of input
+tests/open/p-fp0.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <.>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/open/p-function0.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+Syntax error at line 3, column 12Couldn't repair and continue parse at character 2 of input
+tests/open/p-if-then-else0.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/open/p-if-then-else1.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/open/p-imply.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+SEMI
+space/newline
+IDENT
+space/newline
+space/newline
+SEMI
+space/newline
+IDENT
+space/newline
+space/newline
+IDENT
+space/newline
+Syntax error at line 4, column 14Couldn't repair and continue parse at character 3 of input
+tests/open/p-main0.s
+space/newline
+space/newline
+IDENT
+space/newline
+Syntax error at line 1, column 13Couldn't repair and continue parse at character 0 of input
+tests/open/p-nested-loops.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+<
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <[>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/open/p-rat0.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+space/newline
+space/newline
+space/newline
+Syntax error at line 2, column 14Couldn't repair and continue parse at character 1 of input
+tests/open/p-return0.s
+space/newline
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/open/p-return1.s
+space/newline
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/open/p-reverse.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+<
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <[>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/open/p-sequences.s
+IDENT
+>
+IDENT
+<
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <[>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/open/p-tdef0.s
+space/newline
+space/newline
+alias
+space/newline
+>
+char
+<
+space/newline
+IDENT
+SEMI
+space/newline
+alias
+space/newline
+IDENT
+space/newline
+IDENT
+SEMI
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+space/newline
+SEMI
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+>
+IDENT
+<
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/other/n-c-style-if.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/other/n-decl-after-statements.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/other/n-empty-else.s
+IDENT
+IDENT
+Syntax error at line 1, column 3Couldn't repair and continue parse at character 0 of input
+tests/other/n-empty-main.s
+space/newline
+space/newline
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/other/n-func-para-type-error0.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/other/n-func-return-type.s
+space/newline
+space/newline
+Syntax error at line 2, column 1Couldn't repair and continue parse at character 1 of input
+tests/other/n-main-missing-brace.s
+space/newline
+space/newline
+Syntax error at line 2, column 2Couldn't repair and continue parse at character 1 of input
+tests/other/n-main-return.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+SEMI
+Syntax error at line 2, column 12Couldn't repair and continue parse at character 1 of input
+tests/other/n-multiple-assignment.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+SEMI
+Syntax error at line 2, column 12Couldn't repair and continue parse at character 1 of input
+tests/other/n-nested-type-def0.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+>
+<
+SEMI
+Syntax error at line 2, column 18Couldn't repair and continue parse at character 1 of input
+tests/other/n-no-main.s
+alias
+space/newline
+>
+char
+<
+space/newline
+IDENT
+SEMI
+space/newline
+IDENT
+space/newline
+IDENT
+Syntax error at line 3, column 5Couldn't repair and continue parse at character 2 of input
+tests/other/n-stray-return.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/other/n-two-else.s
+IDENT
+IDENT
+Syntax error at line 1, column 3Couldn't repair and continue parse at character 0 of input
+tests/other/p-adt.s
+space/newline
+space/newline
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+SEMI
+space/newline
+space/newline
+space/newline
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+>
+IDENT
+<
+SEMI
+space/newline
+space/newline
+parsing successful
+tests/other/p-alias-test.s
+space/newline
+space/newline
+alias
+space/newline
+>
+char
+<
+space/newline
+IDENT
+SEMI
+space/newline
+alias
+space/newline
+IDENT
+space/newline
+IDENT
+SEMI
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+space/newline
+SEMI
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+IDENT
+space/newline
+IDENT
+>
+IDENT
+<
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/other/p-alice.s
+IDENT
+IDENT
+Syntax error at line 1, column 3Couldn't repair and continue parse at character 0 of input
+tests/other/p-empty-dict.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+<
+space/newline
+space/newline
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/other/p-empty-seq.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+char
+<
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <[>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/other/p-fib.s
+space/newline
+space/newline
+IDENT
+space/newline
+Syntax error at line 2, column 7Couldn't repair and continue parse at character 1 of input
+tests/other/p-fp0.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <.>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/other/p-function0.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+Syntax error at line 3, column 12Couldn't repair and continue parse at character 2 of input
+tests/other/p-if-then-else0.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/other/p-if-then-else1.s
+IDENT
+space/newline
+IDENT
+Syntax error at line 1, column 5Couldn't repair and continue parse at character 0 of input
+tests/other/p-imply.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+SEMI
+space/newline
+IDENT
+space/newline
+space/newline
+SEMI
+space/newline
+IDENT
+space/newline
+space/newline
+IDENT
+space/newline
+Syntax error at line 4, column 14Couldn't repair and continue parse at character 3 of input
+tests/other/p-main0.s
+space/newline
+space/newline
+IDENT
+space/newline
+Syntax error at line 1, column 13Couldn't repair and continue parse at character 0 of input
+tests/other/p-nested-loops.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+<
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <[>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/other/p-rat0.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+space/newline
+space/newline
+space/newline
+Syntax error at line 2, column 14Couldn't repair and continue parse at character 1 of input
+tests/other/p-return0.s
+space/newline
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/other/p-return1.s
+space/newline
+space/newline
+SEMI
+space/newline
+SEMI
+space/newline
+parsing successful
+tests/other/p-reverse.s
+space/newline
+space/newline
+IDENT
+space/newline
+space/newline
+>
+<
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <[>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)
+tests/other/p-sequences.s
+IDENT
+>
+IDENT
+<
+space/newline
+space/newline
+Exception in thread "main" java.lang.Error: Illegal character <[>
+	at Lexer.next_token(Lexer.java:713)
+	at java_cup.runtime.lr_parser.scan(lr_parser.java:366)
+	at java_cup.runtime.lr_parser.parse(lr_parser.java:693)
+	at SC.main(SC.java:15)

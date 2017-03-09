@@ -36,7 +36,7 @@ terminal PLUS,  MINUS, TIMES, DIV, MOD;
 terminal COLONEQ, LT, GT, LTEQ, EQ, NOTEQ;
 terminal AND, OR, IMPLY;
 terminal RETURN, MAIN, READ, POW;
-terminal QMARK;
+terminal QMARK, STRING;
 
 
 ///
@@ -45,7 +45,7 @@ non terminal statements, body, declaration, expression, declaration_assignment, 
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params;
-non terminal main, initial, dec, arr, seq, assignment, dict;
+non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data;
 
 
 //Precedence declaration
@@ -62,17 +62,21 @@ precedence left NOT, AND, OR, IMPLY;
 
 start with initial;
 
-initial ::= function
+/*initial ::= function
         |
         main
         |
         statements
         |
         expression
-        ;
+        ;*/
+
+initial ::= program_block main program_block;
+
+program_block ::= statements;
 
 
-
+/*
 function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
 
 returnType ::= COLON data_type
@@ -82,7 +86,7 @@ returnType ::= COLON data_type
 parameter ::= IDENTIFIER COLON data_type parameterTail;
 parameterTail ::= COMMA parameter
 			  |
-			  ;
+			  ;*/
 
 
 data_type ::= seq
@@ -105,12 +109,14 @@ statements ::= declaration statements | declaration_assignment statements | brea
 
 
 
-expression ::= data expression //an ambiguity can be assigning empty to a variable? what would happern?
+expression ::= data  //an ambiguity can be assigning empty to a variable? what would happern?
 		   |
 		   function_call
 		   |
 		   operation
 		   |
+       IDENTIFIER
+       |
 		   comparison
 		   |
 		   dictionary
@@ -128,16 +134,19 @@ expression ::= data expression //an ambiguity can be assigning empty to a variab
  		   concat
  		   ;
 
-data ::= NUMBER | CHARACTER | BOOLEAN;
+data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
-declaration ::= IDENTIFIER COLON data_type dec;
+declaration ::= IDENTIFIER COLON data_type dec | IDENTIFIER COLON IDENTIFIER dec;
 dec::= SEMI |;  //we should add this to ambiguities that we can assign functions in declarations
 
-declaration_assignment ::= declaration COLONEQ expression SEMI;
-assignment ::= IDENTIFIER COLONEQ IDENTIFIER SEMI | IDENTIFIER COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
+declaration_assignment ::= declaration COLONEQ all_data SEMI;
+all_data ::= expression | expression COMMA all_data;
+
+assignment ::= IDENTIFIER COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
 
 // dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
 
+//m:person := 30, 11, 40;
 dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
    		       |
@@ -192,7 +201,7 @@ equality ::= NUMBER EQ NUMBER | BOOL EQ BOOL| NUMBER NOTEQ NUMBER| BOOL NOTEQ BO
 
 
 // // //We need to think about this case bool a = 2
-boolean_operations ::= NOT boolean_operations
+/*boolean_operations ::= NOT boolean_operations
 		   		   |
 		   		   boolean_operations AND boolean_operations
 		           |
@@ -201,7 +210,7 @@ boolean_operations ::= NOT boolean_operations
 		           boolean_operations IMPLY boolean_operations
 		           |
 		           BOOLEAN
-		           ;
+		           ;*/
 
 
 in ::= data_type IN sequence

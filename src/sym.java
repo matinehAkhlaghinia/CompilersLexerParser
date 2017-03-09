@@ -57,6 +57,7 @@ public class sym {
   public static final int READ = 52;
   public static final int FLOAT = 22;
   public static final int THEN = 32;
+  public static final int STRING = 55;
   public static final int ALIAS = 24;
   public static final int GT = 43;
   public static final int NOTEQ = 46;
@@ -116,7 +117,8 @@ public class sym {
   "MAIN",
   "READ",
   "POW",
-  "QMARK"
+  "QMARK",
+  "STRING"
   };
 }
 

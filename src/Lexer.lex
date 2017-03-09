@@ -1,5 +1,3 @@
-//working
-
 import java_cup.runtime.*;
 
 %%
@@ -22,10 +20,10 @@ import java_cup.runtime.*;
 
 
 //Characters
-Letter = [a-zA-Z] 
-Digit = [0-9] 
-LineTerminator = \r|\n|\r\n 
-InputCharacter = [^\r\n] 
+Letter = [a-zA-Z]
+Digit = [0-9]
+LineTerminator = \r|\n|\r\n
+InputCharacter = [^\r\n]
 WhiteSpace = {LineTerminator} | [ \t\n]+
 
 Character = '{Letter}' | '{Punctuation}' | '{Digit}'
@@ -47,9 +45,10 @@ PositiveInteger = (0|[1-9]{Digit}*)
 StrictPositiveInteger = ([1-9]{Digit}*)
 Integer = "-"? (0|[1-9]{Digit}*)
 RatOne = {Integer}"_"
-Rational = {RatOne}? {PositiveInteger}"/"{PositiveInteger} 
+Rational = {RatOne}? {PositiveInteger}"/"{PositiveInteger}
 Number = {Integer} | {Rational} | {Float}
 Float = {Integer} ("."0*{StrictPositiveInteger})?
+String = \" ~\"
 
 
 %%
@@ -120,6 +119,7 @@ Float = {Integer} ("."0*{StrictPositiveInteger})?
   {Character}                    {  return symbol(sym.CHARACTER); }
   {Number}                       {  return symbol(sym.NUMBER); }
   {Boolean}                      {  return symbol(sym.BOOLEAN); }
+  {String}                       {  return symbol(sym.STRING); }
 
   //namings
   {Identifier}                   {   System.out.println("IDENT");
