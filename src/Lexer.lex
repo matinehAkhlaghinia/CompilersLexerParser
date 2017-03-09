@@ -110,6 +110,8 @@ String = \" ~\"
   "}"                            {  return symbol(sym.RCURL); }
   "("                            {  return symbol(sym.LPAREN); }
   ")"                            {  return symbol(sym.RPAREN); }
+  "["                            {  return symbol(sym.LBRACKET); }
+  "]"                            {  return symbol(sym.RBRACKET); }
   ";"                            {  System.out.println("SEMI");
                                     return symbol(sym.SEMI); }
 

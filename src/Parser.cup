@@ -62,6 +62,7 @@ precedence left NOT, AND, OR, IMPLY;
 
 start with initial;
 
+<<<<<<< HEAD
 /*initial ::= function
         |
         main
@@ -72,6 +73,12 @@ start with initial;
         ;*/
 
 initial ::= program_block main program_block;
+=======
+initial ::= function
+        | main
+        | statements
+        | expression;
+>>>>>>> origin/test
 
 program_block ::= statements;
 
@@ -80,33 +87,30 @@ program_block ::= statements;
 function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
 
 returnType ::= COLON data_type
-		   |
-		   ;
+                | ;
 
 parameter ::= IDENTIFIER COLON data_type parameterTail;
 parameterTail ::= COMMA parameter
+<<<<<<< HEAD
 			  |
 			  ;*/
 
+=======
+                | ;
+>>>>>>> origin/test
 
 data_type ::= seq
-          |
-          dict //this might be an issue
-          |
-          INT
-          |
-          FLOAT
-          |
-          RAT
-          |
-          BOOL
-          |
-          CHAR
-          ;
+          | dict 
+          | INT
+          | FLOAT
+          | RAT
+          | BOOL
+          | CHAR ;//dict might be an issue
 
 statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|;
 ///the body of the functions
 
+<<<<<<< HEAD
 
 
 expression ::= data  //an ambiguity can be assigning empty to a variable? what would happern?
@@ -133,6 +137,19 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
  		   |
  		   concat
  		   ;
+=======
+expression ::= data expression //an ambiguity can be assigning empty to a variable? what would happern?
+                | function_call
+		| operation
+		| comparison
+		| dictionary
+		| sequence
+		| equality
+		| boolean_operations
+		| in
+		| sequenceSlicing
+ 	        | concat ;
+>>>>>>> origin/test
 
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
@@ -149,8 +166,7 @@ assignment ::= IDENTIFIER COLONEQ expression SEMI; //define data imo the data sh
 //m:person := 30, 11, 40;
 dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
-   		       |
-			       ;
+   	     | ;
 
 // sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
 // seq_element ::= data_type COMMA seq_element
@@ -159,21 +175,16 @@ dict_element ::= data_type COLON data_type COMMA dict_element
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
-objectArray ::= IDENTIFIER COLON IDENTIFIER arr| IDENTIFIER COLON data_type arr;
+
+objectArray ::= IDENTIFIER COLON IDENTIFIER arr
+             | IDENTIFIER COLON data_type arr;
+
 arr ::= COMMA objectArray
     |
     ;
 
-
-
-
-alias ::= ALIAS data_type IDENTIFIER SEMI
-      |
-      ALIAS IDENTIFIER IDENTIFIER SEMI
-      ;
-
-
-
+alias ::= ALIAS data_type IDENTIFIER SEMI 
+      | ALIAS IDENTIFIER IDENTIFIER SEMI ;
 
 // // //function declaration
 // // //fucntion use
@@ -181,26 +192,29 @@ alias ::= ALIAS data_type IDENTIFIER SEMI
 function_call ::= IDENTIFIER LPAREN params RPAREN SEMI;
 
 params ::= expression COMMA params
-       |
-       expression
-       |
-       ;
+       | expression
+       |;
+
+if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI 
+             | IF LPAREN expression RPAREN THEN statements FI;
 
 
-
-if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI | IF LPAREN expression RPAREN THEN statements FI;
-
-
-break_statement ::= BREAK SEMI| BREAK NUMBER SEMI;   //the ambiguity here is that when break is outside the loop how would we realize
+break_statement ::= BREAK SEMI
+                | BREAK NUMBER SEMI;   //the ambiguity here is that when break is outside the loop how would we realize
 
 loop_statement ::= LOOP statements POOL;
 
-comparison ::= NUMBER LT NUMBER | NUMBER LTEQ NUMBER;
+comparison ::= NUMBER LT NUMBER
+            | NUMBER LTEQ NUMBER;
 
-equality ::= NUMBER EQ NUMBER | BOOL EQ BOOL| NUMBER NOTEQ NUMBER| BOOL NOTEQ BOOL;
+equality ::= NUMBER EQ NUMBER 
+          | BOOL EQ BOOL
+          | NUMBER NOTEQ NUMBER
+          | BOOL NOTEQ BOOL;
 
 
 // // //We need to think about this case bool a = 2
+<<<<<<< HEAD
 /*boolean_operations ::= NOT boolean_operations
 		   		   |
 		   		   boolean_operations AND boolean_operations
@@ -211,12 +225,17 @@ equality ::= NUMBER EQ NUMBER | BOOL EQ BOOL| NUMBER NOTEQ NUMBER| BOOL NOTEQ BO
 		           |
 		           BOOLEAN
 		           ;*/
+=======
+boolean_operations ::= NOT boolean_operations
+                        | boolean_operations AND boolean_operations
+		        | boolean_operations OR boolean_operations
+		        | boolean_operations IMPLY boolean_operations
+		        | BOOLEAN ;
+>>>>>>> origin/test
 
 
 in ::= data_type IN sequence
-   |
-   data_type IN dictionary
-   ;
+   | data_type IN dictionary ;
 
 // sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
 //          |
@@ -244,13 +263,13 @@ in ::= data_type IN sequence
 //             ;
 
 
-seq ::= SEQ LT data_type GT| SEQ LT IDENTIFIER GT;
+seq ::= SEQ LT data_type GT
+     | SEQ LT IDENTIFIER GT;
 
 main ::= MAIN LCURL statements RCURL SEMI;
 
 return_ ::= RETURN SEMI
-        |
-        RETURN expression SEMI
+        | RETURN expression SEMI
         ;
 
 
