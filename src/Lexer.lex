@@ -48,6 +48,7 @@ RatOne = {Integer}"_"
 Rational = {RatOne}? {PositiveInteger}"/"{PositiveInteger} 
 Number = {Integer} | {Rational} | {Float}
 Float = {Integer} ("."0*{StrictPositiveInteger})?
+String = \" ~\"
 
 
 %%
@@ -109,6 +110,8 @@ Float = {Integer} ("."0*{StrictPositiveInteger})?
   "}"                            {  return symbol(sym.RCURL); }
   "("                            {  return symbol(sym.LPAREN); }
   ")"                            {  return symbol(sym.RPAREN); }
+  "["                            {  return symbol(sym.LBRACKET); }
+  "]"                            {  return symbol(sym.RBRACKET); }
   ";"                            {  System.out.println("SEMI");
                                     return symbol(sym.SEMI); }
 
@@ -118,6 +121,7 @@ Float = {Integer} ("."0*{StrictPositiveInteger})?
   {Character}                    {  return symbol(sym.CHARACTER); }
   {Number}                       {  return symbol(sym.NUMBER); }
   {Boolean}                      {  return symbol(sym.BOOLEAN); }
+  {String}                       {  return symbol(sym.STRING); }
 
   //namings
   {Identifier}                   {   System.out.println("IDENT");
