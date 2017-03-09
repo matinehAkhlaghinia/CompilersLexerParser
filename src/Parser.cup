@@ -63,69 +63,43 @@ precedence left NOT, AND, OR, IMPLY;
 start with initial;
 
 initial ::= function
-        |
-        main
-        |
-        statements
-        |
-        expression
-        ;
+        | main
+        | statements
+        | expression;
 
 
 
 function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
 
 returnType ::= COLON data_type
-		   |
-		   ;
+                | ;
 
 parameter ::= IDENTIFIER COLON data_type parameterTail;
 parameterTail ::= COMMA parameter
-			  |
-			  ;
-
+                | ;
 
 data_type ::= seq
-          |
-          dict //this might be an issue
-          |
-          INT
-          |
-          FLOAT
-          |
-          RAT
-          |
-          BOOL
-          |
-          CHAR
-          ;
+          | DICT 
+          | INT
+          | FLOAT
+          | RAT
+          | BOOL
+          | CHAR ;//dict might be an issue
 
 statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|;
 ///the body of the functions
 
-
-
 expression ::= data expression //an ambiguity can be assigning empty to a variable? what would happern?
-		   |
-		   function_call
-		   |
-		   operation
-		   |
-		   comparison
-		   |
-		   dictionary
-		   |
-		   sequence
-		   |
-		   equality
-		   |
-		   boolean_operations
-		   |
-		   in
-		   |
- 		   sequenceSlicing
- 		   |
- 		   concat
+                | function_call
+		| operation
+		| comparison
+		| dictionary
+		| sequence
+		| equality
+		| boolean_operations
+		| in
+		| sequenceSlicing
+ 	        | concat
  		   ;
 
 data ::= NUMBER | CHARACTER | BOOLEAN;
@@ -150,18 +124,17 @@ dict_element ::= data_type COLON data_type COMMA dict_element
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
-objectArray ::= IDENTIFIER COLON IDENTIFIER arr| IDENTIFIER COLON data_type arr;
+
+objectArray ::= IDENTIFIER COLON IDENTIFIER arr
+             | IDENTIFIER COLON data_type arr;
+
 arr ::= COMMA objectArray
     |
     ;
 
 
-
-
-alias ::= ALIAS data_type IDENTIFIER SEMI
-      |
-      ALIAS IDENTIFIER IDENTIFIER SEMI
-      ;
+alias ::= ALIAS data_type IDENTIFIER SEMI 
+      | ALIAS IDENTIFIER IDENTIFIER SEMI ;
 
 
 
@@ -172,10 +145,8 @@ alias ::= ALIAS data_type IDENTIFIER SEMI
 function_call ::= IDENTIFIER LPAREN params RPAREN SEMI;
 
 params ::= expression COMMA params
-       |
-       expression
-       |
-       ;
+       | expression
+       |;
 
 
 
@@ -193,20 +164,14 @@ equality ::= NUMBER EQ NUMBER | BOOL EQ BOOL| NUMBER NOTEQ NUMBER| BOOL NOTEQ BO
 
 // // //We need to think about this case bool a = 2
 boolean_operations ::= NOT boolean_operations
-		   		   |
-		   		   boolean_operations AND boolean_operations
-		           |
-		           boolean_operations OR boolean_operations
-		           |
-		           boolean_operations IMPLY boolean_operations
-		           |
-		           BOOLEAN
-		           ;
+                        | boolean_operations AND boolean_operations
+		        | boolean_operations OR boolean_operations
+		        | boolean_operations IMPLY boolean_operations
+		        | BOOLEAN ;
 
 
 in ::= data_type IN sequence
-   |
-   data_type IN dictionary
+   |data_type IN dictionary
    ;
 
 // sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
