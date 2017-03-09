@@ -33,9 +33,9 @@ terminal CHARACTER, BOOL, DICT, SEQ, NUMBER, TOP, BOOLEAN, RAT, INT, FLOAT, CHAR
 terminal ALIAS, IF, FI, LOOP, POOL, TDEF, BREAK, FDEF, THEN, ELSE, IN;
 terminal IDENTIFIER;
 terminal PLUS,  MINUS, TIMES, DIV, MOD;
-terminal COLONEQ, LT, LTEQ, EQ, NOTEQ;
+terminal COLONEQ, LT, GT, LTEQ, EQ, NOTEQ;
 terminal AND, OR, IMPLY;
-terminal RETURN, MAIN, READ, FUNCTION, POW;
+terminal RETURN, MAIN, READ, POW;
 terminal QMARK;
 
 
@@ -45,26 +45,47 @@ non terminal statements, body, declaration, expression, declaration_assignment, 
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params;
+non terminal main, initial, dec, arr, seq, assignment;
 
 
 //Precedence declaration
 
 precedence left PLUS, MINUS;
-precedence left TIMES, DIV, MOD;
+precedence left TIMES, DIV, MOD, POW;
+precedence left NOT, AND, OR, IMPLY;
 
 
 
 //Grammar (context-free)
 
 //number ::= FLOAT | RAT | INT
-data ::= NUMBER
-	 |
-	 CHARACTER
-	 |
-	 BOOLEAN
-	 ;
 
-data_type ::= SEQ 
+start with initial; 
+
+initial ::= function
+        | 
+        main 
+        | 
+        statements
+        |
+        expression
+        ;
+
+
+
+function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
+
+returnType ::= COLON data_type
+		   |
+		   ;
+
+parameter ::= IDENTIFIER COLON data_type parameterTail; 
+parameterTail ::= COMMA parameter 
+			  | 
+			  ;
+
+
+data_type ::= seq
           | 
           DICT //this might be an issue
           |
@@ -79,45 +100,22 @@ data_type ::= SEQ
           CHAR
           ;
 
-statements ::= declaration 
-		   | 
-		   declaration_assignment 
-		   | 
-		   break_statement
-		   |
-           dictionary_binding
-           |
-           if_statement
-           |
-           if_else_statement
-           |
-           loop_statement
-           |
-           return_
-           |
-		   ;  ///the body of the functions
+statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|;	    
+///the body of the functions
 
 
-body ::= statements body
-	 | 
-	 ;
 
-
-expression ::= data    //an ambiguity can be assigning empty to a variable? what would happern?
+expression ::= data expression //an ambiguity can be assigning empty to a variable? what would happern?
 		   | 
 		   function_call
 		   | 
 		   operation 
 		   | 
 		   comparison 
-		   | 
-		   IDENTIFIER
 		   |
 		   dictionary
 		   |
 		   sequence
-		   |
-		   comparison
 		   |
 		   equality
 		   |
@@ -125,33 +123,41 @@ expression ::= data    //an ambiguity can be assigning empty to a variable? what
 		   |
 		   in
 		   |
-		   sequenceSlicing
-		   |
-		   concat
-		   ;       
+ 		   sequenceSlicing
+ 		   |
+ 		   concat
+ 		   ;
 
-declaration ::= IDENTIFIER COLON data_type SEMI | IDENTIFIER COLON data_type;  //we should add this to ambiguities that we can assign functions in declarations
+data ::= NUMBER | CHARACTER | BOOLEAN;       
 
-declaration_assignment ::= declaration COLONEQ expression SEMI; //define data imo the data should be passed from the lexer 
+// declaration ::= IDENTIFIER COLON data_type dec;
+// dec::= SEMI
+//    |
+//    ;  //we should add this to ambiguities that we can assign functions in declarations
 
-dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
+// declaration_assignment ::= declaration COLONEQ expression SEMI;
+assignment ::= IDENTIFIER COLONEQ IDENTIFIER SEMI | IDENTIFIER COLONEQ expression SEMI; //define data imo the data should be passed from the lexer 
 
-dictionary ::= LCURL dict_element RCURL;
-dict_element ::= data_type COLON data_type COMMA dict_element
-			 | 
-			 ;
+// dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
 
-sequence ::=  LBRACKET seq_element RBRACKET;
-seq_element ::= data_type COMMA seq_element
-			|
-			;
+// dictionary ::= LCURL dict_element RCURL;
+// dict_element ::= data_type COLON data_type COMMA dict_element
+// 			 | 
+// 			 ;
+
+// sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
+// seq_element ::= data_type COMMA seq_element
+// 			|
+// 			;
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
-objectArray ::= IDENTIFIER COLON data_type COMMA objectArray 
-			| 
-			IDENTIFIER COLON data_type SEMI
-			;
+objectArray ::= IDENTIFIER COLON IDENTIFIER arr| IDENTIFIER COLON data_type arr;
+arr ::= COMMA objectArray
+    |
+    ;
+
+
 
 
 alias ::= ALIAS data_type IDENTIFIER SEMI 
@@ -160,68 +166,44 @@ alias ::= ALIAS data_type IDENTIFIER SEMI
       ;
 
 
-parameter ::= data_type IDENTIFIER parameterTail; 
-parameterTail ::= COMMA parameter 
-			  | 
-			  ;
 
 
-// //function declaration
-// //fucntion use
+// // //function declaration
+// // //fucntion use
 
 function_call ::= IDENTIFIER LPAREN params RPAREN SEMI;
 
 params ::= expression COMMA params 
-       | expression 
+       | 
+       expression 
        |
        ;
 
-function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL body RCURL returnType SEMI; ////do we need to consider space?
-
-returnType ::= COLON data_type 
-		   |
-		   ;
 
 
-if_statement ::= IF LPAREN expression RPAREN THEN body if_else_statement FI;
-
-if_else_statement ::= ELSE body 
-				  |
-				  ;
+if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI | IF LPAREN expression RPAREN THEN statements FI;
 
 
-break_statement ::= BREAK 
-				| 
-				BREAK NUMBER
-				;   //the ambiguity here is that when break is outside the loop how would we realize
+break_statement ::= BREAK SEMI| BREAK NUMBER SEMI;   //the ambiguity here is that when break is outside the loop how would we realize
 
-loop_statement ::= LOOP body POOL;
+loop_statement ::= LOOP statements POOL;
 
-comparison ::= NUMBER LT NUMBER
- 		   |
- 		   NUMBER LTEQ NUMBER
- 		   ;
+comparison ::= NUMBER LT NUMBER | NUMBER LTEQ NUMBER;
  		   
-equality ::= NUMBER EQ NUMBER
-		 | 
-		 BOOL EQ BOOL
-		 | 
-		 NUMBER NOTEQ NUMBER
-		 | 
-		 BOOL NOTEQ BOOL
-		 ;
+equality ::= NUMBER EQ NUMBER | BOOL EQ BOOL| NUMBER NOTEQ NUMBER| BOOL NOTEQ BOOL;
 
 
-// //We need to think about this case bool a = 2
-boolean_operations ::= NOT expression 
-		   		   | 
-		   		   expression AND expression
+// // //We need to think about this case bool a = 2
+boolean_operations ::= NOT boolean_operations
+		   		   |
+		   		   boolean_operations AND boolean_operations
 		           | 
-		           expression OR expression
+		           boolean_operations OR boolean_operations
 		           | 
-		           expression IMPLY expression
+		           boolean_operations IMPLY boolean_operations
+		           |
+		           BOOLEAN 
 		           ;
-
 
 
 in ::= data_type IN sequence 
@@ -229,54 +211,59 @@ in ::= data_type IN sequence
    data_type IN dictionary
    ;
 
-sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET 
-         | 
-         data_type IN data_type 
-         | 
-         data_type COLON data_type
-         ;
+// sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET 
+//          | 
+//          data_type IN data_type 
+//          | 
+//          data_type COLON data_type
+//          ;
 
-sequenceTail ::= IDENTIFIER COLON IDENTIFIER 
-             | 
-             IDENTIFIER COLON 
-             | 
-             COLON IDENTIFIER
-             ;
+// sequenceTail ::= IDENTIFIER COLON IDENTIFIER 
+//              | 
+//              IDENTIFIER COLON 
+//              | 
+//              COLON IDENTIFIER
+//              ;
 
-concat ::= SEQ COLONCOLON SEQ concat_tail 
-       | 
-       IDENTIFIER COLONCOLON IDENTIFIER concat_tail
-       ;
+// concat ::= SEQ COLONCOLON SEQ concat_tail 
+//        | 
+//        IDENTIFIER COLONCOLON IDENTIFIER concat_tail
+//        ;
 
-concat_tail  ::= COLONCOLON SEQ concat_tail 
-            |  
-            COLONCOLON IDENTIFIER concat_tail 
-            |
-            ;
+// concat_tail  ::= COLONCOLON SEQ concat_tail 
+//             |  
+//             COLONCOLON IDENTIFIER concat_tail 
+//             |
+//             ;
 
-main ::= MAIN LCURL body RCURL SEMI;
+
+seq ::= SEQ LT data_type GT IDENTIFIER | SEQ LT IDENTIFIER GT IDENTIFIER;
+
+main ::= MAIN LCURL statements RCURL SEMI;
 
 return_ ::= RETURN SEMI
         | 
         RETURN expression SEMI
         ;
 
-//one of the amguities is + coming before negative numbers
+// //one of the amguities is + coming before negative numbers
 
-operation  ::= operation PLUS operation   
-	      |
-	      operation MINUS operation   
-	      | 
-          operation TIMES operation 
-	      | 
-	      operation DIV operation 
-	      | 
-          operation MOD operation 
-	      | 
-          NUMBER                  
-	      | 
-          MINUS operation             
-	      | 
-          LPAREN operation RPAREN
-          ;     
+// operation  ::= operation PLUS operation   
+// 	      |
+// 	      operation MINUS operation   
+// 	      | 
+//           operation TIMES operation 
+// 	      | 
+// 	      operation DIV operation 
+// 	      | 
+//           operation MOD operation 
+// 	      |
+// 	      operation POW operation
+// 	      |
+//        NUMBER                  
+// 	      | 
+//        MINUS operation             
+// 	      | 
+//        LPAREN operation RPAREN
+//        ;     
 
