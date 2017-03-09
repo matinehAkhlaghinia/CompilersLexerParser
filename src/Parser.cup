@@ -62,28 +62,13 @@ precedence left NOT, AND, OR, IMPLY;
 
 start with initial;
 
-<<<<<<< HEAD
-/*initial ::= function
-        |
-        main
-        |
-        statements
-        |
-        expression
-        ;*/
-
 initial ::= program_block main program_block;
-=======
-initial ::= function
-        | main
-        | statements
-        | expression;
->>>>>>> origin/test
+
 
 program_block ::= statements;
 
 
-/*
+
 function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
 
 returnType ::= COLON data_type
@@ -91,16 +76,10 @@ returnType ::= COLON data_type
 
 parameter ::= IDENTIFIER COLON data_type parameterTail;
 parameterTail ::= COMMA parameter
-<<<<<<< HEAD
-			  |
-			  ;*/
-
-=======
                 | ;
->>>>>>> origin/test
 
 data_type ::= seq
-          | dict 
+          | dict
           | INT
           | FLOAT
           | RAT
@@ -110,46 +89,19 @@ data_type ::= seq
 statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|;
 ///the body of the functions
 
-<<<<<<< HEAD
-
 
 expression ::= data  //an ambiguity can be assigning empty to a variable? what would happern?
-		   |
-		   function_call
-		   |
-		   operation
-		   |
-       IDENTIFIER
-       |
-		   comparison
-		   |
-		   dictionary
-		   |
-		   sequence
-		   |
-		   equality
-		   |
-		   boolean_operations
-		   |
-		   in
-		   |
- 		   sequenceSlicing
- 		   |
- 		   concat
- 		   ;
-=======
-expression ::= data expression //an ambiguity can be assigning empty to a variable? what would happern?
-                | function_call
-		| operation
-		| comparison
-		| dictionary
-		| sequence
-		| equality
-		| boolean_operations
-		| in
-		| sequenceSlicing
- 	        | concat ;
->>>>>>> origin/test
+		   | function_call
+		   | operation
+		   | IDENTIFIER
+       | comparison
+		   | dictionary
+		   | sequence
+		   | equality
+		   | boolean_operations
+		   | in
+		   | sequenceSlicing
+ 		   | concat ;
 
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
@@ -183,7 +135,7 @@ arr ::= COMMA objectArray
     |
     ;
 
-alias ::= ALIAS data_type IDENTIFIER SEMI 
+alias ::= ALIAS data_type IDENTIFIER SEMI
       | ALIAS IDENTIFIER IDENTIFIER SEMI ;
 
 // // //function declaration
@@ -195,7 +147,7 @@ params ::= expression COMMA params
        | expression
        |;
 
-if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI 
+if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI
              | IF LPAREN expression RPAREN THEN statements FI;
 
 
@@ -207,31 +159,19 @@ loop_statement ::= LOOP statements POOL;
 comparison ::= NUMBER LT NUMBER
             | NUMBER LTEQ NUMBER;
 
-equality ::= NUMBER EQ NUMBER 
+equality ::= NUMBER EQ NUMBER
           | BOOL EQ BOOL
           | NUMBER NOTEQ NUMBER
           | BOOL NOTEQ BOOL;
 
 
 // // //We need to think about this case bool a = 2
-<<<<<<< HEAD
+
 /*boolean_operations ::= NOT boolean_operations
-		   		   |
-		   		   boolean_operations AND boolean_operations
-		           |
-		           boolean_operations OR boolean_operations
-		           |
-		           boolean_operations IMPLY boolean_operations
-		           |
-		           BOOLEAN
-		           ;*/
-=======
-boolean_operations ::= NOT boolean_operations
-                        | boolean_operations AND boolean_operations
+            | boolean_operations AND boolean_operations
 		        | boolean_operations OR boolean_operations
 		        | boolean_operations IMPLY boolean_operations
-		        | BOOLEAN ;
->>>>>>> origin/test
+		        | BOOLEAN ;*/
 
 
 in ::= data_type IN sequence
