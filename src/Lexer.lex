@@ -47,7 +47,7 @@ Integer = "-"? (0|[1-9]{Digit}*)
 RatOne = {Integer}"_"
 Rational = {RatOne}? {PositiveInteger}"/"{PositiveInteger}
 Number = {Integer} | {Rational} | {Float}
-Float = {Integer} ("."0*{StrictPositiveInteger})?
+Float = {Integer} ("."{Digit}*)
 String = \" ~\"
 
 
