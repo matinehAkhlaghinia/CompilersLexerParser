@@ -36,7 +36,7 @@ terminal PLUS,  MINUS, TIMES, DIV, MOD;
 terminal COLONEQ, LT, GT, LTEQ, EQ, NOTEQ;
 terminal AND, OR, IMPLY;
 terminal RETURN, MAIN, READ, POW;
-terminal QMARK, STRING;
+terminal QMARK, STRING, DOT;
 
 
 ///
@@ -45,7 +45,7 @@ non terminal statements, body, declaration, expression, declaration_assignment, 
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params;
-non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data;
+non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier;
 
 
 //Precedence declaration
@@ -93,7 +93,7 @@ statements ::= declaration statements | declaration_assignment statements | brea
 expression ::= data  //an ambiguity can be assigning empty to a variable? what would happern?
 		   | function_call
 		   | operation
-		   | IDENTIFIER
+		   | identifier
        | comparison
 		   | dictionary
 		   | sequence
@@ -103,6 +103,7 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | sequenceSlicing
  		   | concat ;
 
+identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER;
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
 declaration ::= IDENTIFIER COLON data_type dec | IDENTIFIER COLON IDENTIFIER dec;
@@ -111,8 +112,8 @@ dec::= SEMI |;  //we should add this to ambiguities that we can assign functions
 declaration_assignment ::= declaration COLONEQ all_data SEMI;
 all_data ::= expression | expression COMMA all_data;
 
-assignment ::= IDENTIFIER COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
-
+assignment ::= identifier COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
+//f:family := m,p,[c1,c2];
 // dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
 
 //m:person := 30, 11, 40;
@@ -120,10 +121,8 @@ dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
    	     | ;
 
-// sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
-// seq_element ::= data_type COMMA seq_element
-// 			|
-// 			;
+ sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
+ seq_element ::= expression COMMA seq_element | expression |;
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
@@ -191,16 +190,16 @@ in ::= data_type IN sequence
 //              COLON IDENTIFIER
 //              ;
 
-// concat ::= SEQ COLONCOLON SEQ concat_tail
-//        |
-//        IDENTIFIER COLONCOLON IDENTIFIER concat_tail
-//        ;
+concat ::= SEQ COLONCOLON SEQ concat_tail
+        |
+        IDENTIFIER COLONCOLON IDENTIFIER concat_tail
+        ;
 
-// concat_tail  ::= COLONCOLON SEQ concat_tail
-//             |
-//             COLONCOLON IDENTIFIER concat_tail
-//             |
-//             ;
+ concat_tail  ::= COLONCOLON SEQ concat_tail
+             |
+            COLONCOLON IDENTIFIER concat_tail
+             |
+            ;
 
 
 seq ::= SEQ LT data_type GT

@@ -114,6 +114,7 @@ String = \" ~\"
   "]"                            {  return symbol(sym.RBRACKET); }
   ";"                            {  System.out.println("SEMI");
                                     return symbol(sym.SEMI); }
+  "."                            {  return symbol(sym.DOT); }
 
   //Punctuation
 
