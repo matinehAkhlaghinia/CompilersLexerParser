@@ -124,12 +124,11 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | boolean_operations
 		   | in
  		   | concat
-           | function_call
            | MINUS expression
 		   | LPAREN expression RPAREN;
 
 
-identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET | sequenceSlicing DOT identifier | sequenceSlicing;
+identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET | sequenceSlicing DOT identifier | sequenceSlicing | function_call DOT identifier| function_call;
 
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
