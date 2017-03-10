@@ -7,7 +7,7 @@
 public class sym {
   /* terminals */
   public static final int SEQ = 16;
-  public static final int POW = 53;
+  public static final int POW = 54;
   public static final int LBRACKET = 9;
   public static final int CHAR = 23;
   public static final int LTEQ = 44;
@@ -26,7 +26,7 @@ public class sym {
   public static final int OR = 48;
   public static final int IN = 34;
   public static final int TDEF = 29;
-  public static final int QMARK = 54;
+  public static final int QMARK = 55;
   public static final int BOOL = 14;
   public static final int COMMA = 6;
   public static final int FI = 26;
@@ -57,9 +57,10 @@ public class sym {
   public static final int READ = 52;
   public static final int FLOAT = 22;
   public static final int THEN = 32;
-  public static final int STRING = 55;
+  public static final int STRING = 56;
   public static final int ALIAS = 24;
   public static final int GT = 43;
+  public static final int PRINT = 53;
   public static final int NOTEQ = 46;
   public static final int IDENTIFIER = 35;
   public static final String[] terminalNames = new String[] {
@@ -116,6 +117,7 @@ public class sym {
   "RETURN",
   "MAIN",
   "READ",
+  "PRINT",
   "POW",
   "QMARK",
   "STRING"

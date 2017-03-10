@@ -79,6 +79,7 @@ String = \" ~\"
   "break"                        {  return symbol(sym.BREAK); }
   "return"                       {  return symbol(sym.RETURN); }
   "read"                         {  return symbol(sym.READ); }
+  "print"                        {  return symbol(sym.PRINT); }
   "alias"                        {  System.out.println("alias");
                                     return symbol(sym.ALIAS); }
 
