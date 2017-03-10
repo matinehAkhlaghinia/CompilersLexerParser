@@ -43,7 +43,7 @@ Boolean = T | F
 //Numbers
 PositiveInteger = (0|[1-9]{Digit}*)
 StrictPositiveInteger = ([1-9]{Digit}*)
-Integer = "-"? (0|[1-9]{Digit}*)
+Integer = (0|[1-9]{Digit}*)
 RatOne = {Integer}"_"
 Rational = {RatOne}? {PositiveInteger}"/"{PositiveInteger}
 Number = {Integer} | {Rational} | {Float}
@@ -73,6 +73,7 @@ String = \" ~\"
   "if"                           {return symbol(sym.IF); }
   "fi"                           {  return symbol(sym.FI); }
   "then"                         {  return symbol(sym.THEN); }
+  "else"                         {  return symbol(sym.ELSE); }
   "loop"                         {  return symbol(sym.LOOP); }
   "pool"                         {  return symbol(sym.POOL); }
   "tdef"                         {  return symbol(sym.TDEF); }
@@ -97,7 +98,7 @@ String = \" ~\"
   "&&"                           {  return symbol(sym.AND); }
   "||"                           {  return symbol(sym.OR); }
   "+"                            {  return symbol(sym.PLUS); }
-  "-"                            {  return symbol(sym.MINUS); }
+  "-"                            {  System.out.println("MINUS"); return symbol(sym.MINUS); }
   "*"                            {  return symbol(sym.TIMES); }
   "/"                            {  return symbol(sym.DIV); }
   "^"                            {  return symbol(sym.POW); }
@@ -118,7 +119,7 @@ String = \" ~\"
 
     //COMMENT DONT RETURN ANYTHING
   {Character}                    {  return symbol(sym.CHARACTER); }
-  {Number}                       {  return symbol(sym.NUMBER); }
+  {Number}                       {  System.out.println("NUMBER"); return symbol(sym.NUMBER); }
   {Boolean}                      {  return symbol(sym.BOOLEAN); }
   {String}                       { return symbol(sym.STRING); }
 
