@@ -129,7 +129,8 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | LPAREN expression RPAREN;
 
 
-identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET | sequenceSlicing;
+identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET | sequenceSlicing DOT identifier;
+
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
 declaration ::= IDENTIFIER COLON data_type dec | IDENTIFIER COLON IDENTIFIER dec;
