@@ -53,6 +53,7 @@ non terminal print_statement;
 precedence left PLUS, MINUS;
 precedence left TIMES, DIV, MOD, POW;
 precedence left NOT, AND, OR, IMPLY;
+precedence left EQ, NOTEQ;
 
 
 
@@ -114,7 +115,8 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | in
 		   | sequenceSlicing
  		   | concat 
-               | function_call;
+               | function_call
+               | MINUS expression;
 
 identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER | IDENTIFIER LBRACKET identifier RBRACKET;
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
@@ -134,8 +136,8 @@ dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
    	     | ;
 
- sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
- seq_element ::= expression COMMA seq_element | expression |;
+sequence ::=  LBRACKET seq_element RBRACKET; ///[2]
+seq_element ::= expression COMMA seq_element | expression |;
 
 
 typeDefinition ::= TDEF IDENTIFIER LCURL objectArray RCURL SEMI;
@@ -177,11 +179,8 @@ comparison ::= identifier LT identifier| identifier LT NUMBER | NUMBER LT identi
 
 //if (i<books)
 
-equality ::= NUMBER EQ NUMBER
-          | BOOL EQ BOOL
-          | NUMBER NOTEQ NUMBER
-          | BOOL NOTEQ BOOL;
-
+equality ::= expression EQ expression
+          | expression NOTEQ expression;
 
 // // //We need to think about this case bool a = 2
 
@@ -209,15 +208,12 @@ in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN seque
 //              ;
 
 concat ::= SEQ COLONCOLON SEQ concat_tail
-        |
-        IDENTIFIER COLONCOLON IDENTIFIER concat_tail
+        | IDENTIFIER COLONCOLON IDENTIFIER concat_tail
         ;
 
  concat_tail  ::= COLONCOLON SEQ concat_tail
-             |
-            COLONCOLON IDENTIFIER concat_tail
-             |
-            ;
+             | COLONCOLON IDENTIFIER concat_tail
+             | ;
 
 seq ::= SEQ LT data_type GT
      | SEQ LT IDENTIFIER GT;
@@ -232,19 +228,10 @@ dict ::= DICT LT data_type COMMA data_type GT;
 
 // //one of the amguities is + coming before negative numbers
 
- operation  ::= expression PLUS expression
-	      |
- 	      expression MINUS expression
-	      |
-        expression TIMES expression
-	      |
-        expression DIV expression
-	      |
-        expression MOD expression
-	      |
-	      expression POW expression
- 	      |
-        MINUS expression
-	      |
-        LPAREN expression RPAREN
-        ;
+operation  ::= expression PLUS expression
+	      | expression MINUS expression
+	      | expression TIMES expression
+	      | expression DIV expression
+	      | expression MOD expression
+	      | expression POW expression
+	      | LPAREN expression RPAREN;
