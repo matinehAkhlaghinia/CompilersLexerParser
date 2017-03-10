@@ -61,9 +61,6 @@ precedence left LPAREN, RPAREN;
 
 
 
-//Grammar (context-free)
-
-//number ::= FLOAT | RAT | INT
 
 start with initial;
 
@@ -139,9 +136,6 @@ declaration_assignment ::= declaration COLONEQ all_data SEMI;
 all_data ::= expression | expression COMMA all_data;
 
 assignment ::= identifier COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
-//s1:string := "Alice in Wonderland";
-// dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
-//l1:seq<string> := ["a","b", "c", "d", "e"];
 dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
    	     | ;
@@ -175,20 +169,18 @@ params ::= params_ | ;
 if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI
              | IF LPAREN expression RPAREN THEN statements FI;
 
-//if (i) then
+
 break_statement ::= BREAK SEMI
                 | BREAK NUMBER SEMI;   //the ambiguity here is that when break is outside the loop how would we realize
 
 loop_statement ::= LOOP statements POOL;
 
-/*comparison ::= NUMBER LT NUMBER
-            | NUMBER LTEQ NUMBER;*/
+
 
 comparison ::= expression LT expression
 			| expression LTEQ expression ;
 
 
-//if (i<books)
 
 equality ::= expression EQ expression
           | expression NOTEQ expression;
@@ -205,11 +197,7 @@ boolean_operations ::= NOT expression
 in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN sequence;
 
 sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET;
-          /*data_type IN data_type*/
-          /*| data_type COLON data_type ;*/
 
-
-          ///thirdlist:seq<top> := l2[:-2] :: l2[3:];
 
  sequenceTail ::= expression COLON expression
              | expression COLON
@@ -220,16 +208,9 @@ sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET;
 
 concat ::= idiot COLONCOLON idiot
         | idiot COLONCOLON concat;
-        /*| idiot COLONCOLON concat
-        | idiot;*/
-        /*| identifier COLONCOLON concat
-        | identifier COLONCOLON identifier
-        | identifier COLONCOLON identifier COLONCOLON concat
-        | sequence  COLONCOLON sequence COLONCOLON concat
-        | identifier COLONCOLON sequence  COLONCOLON concat
-        | sequence COLONCOLON identifier COLONCOLON concat ;*/
+
 idiot ::= sequence | identifier ;
-        //anotherlist:seq<top> := [s1] :: [s2] :: newlist;
+
 
 seq ::= SEQ LT data_type GT
      | SEQ LT IDENTIFIER GT;
