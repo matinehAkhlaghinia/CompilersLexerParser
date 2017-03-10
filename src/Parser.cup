@@ -225,7 +225,7 @@ boolean_operations ::= NOT expression
 	    ;
 
 
-in ::= expression IN identifier | expression IN dictionary | expression IN sequence;
+in ::= expression IN identifier | expression IN dictionary | expression IN sequence | expression IN STRING;
 /*a.b.c.name[1:2].foo.bar.name[1]*/
 
 
