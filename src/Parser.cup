@@ -48,6 +48,8 @@ non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, d
 non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier;
 non terminal idiot;
 non terminal print_statement, read_statement, decla, statements__;
+non terminal readable;
+non terminal statementswithbreak__, statementswithbreak_, statementswithbreak, if_statementwithbreak;
 
 
 //Precedence declaration
@@ -88,9 +90,7 @@ data_type ::= seq
           | CHAR
           | TOP ;//dict might be an issue
 
-statements__ ::= break_statement
-            | if_statement
-            | if_else_statement
+statements__ ::= if_statement
             | loop_statement
             | return_
             | typeDefinition
@@ -99,7 +99,7 @@ statements__ ::= break_statement
             | assignment
             | function_call SEMI
             | function
-			| read_statement;
+	    | read_statement;
 
 decla ::= declaration
 	   | declaration_assignment;
@@ -107,21 +107,40 @@ decla ::= declaration
 statements_ ::= statements__ statements_ | statements__ ;
 
 statements ::= decla | decla statements | statements_;
+
+statementswithbreak__ ::= break_statement
+            | if_statementwithbreak
+            | loop_statement
+            | return_
+            | typeDefinition
+            | print_statement
+            | alias
+            | assignment
+            | function_call SEMI
+            | function
+	    | read_statement;
+statementswithbreak_ ::= statementswithbreak__ statementswithbreak_ | statementswithbreak__ ;
+statementswithbreak ::= decla | decla statementswithbreak| statementswithbreak_;
+if_statementwithbreak ::= IF LPAREN expression RPAREN THEN statementswithbreak ELSE statements FI
+                  | IF LPAREN expression RPAREN THEN statementswithbreak FI;
+
+
+
 print_statement ::= PRINT expression SEMI;
-read_statement ::= READ identifier SEMI;
+read_statement ::= READ readable SEMI;
 
 expression ::= data  //an ambiguity can be assigning empty to a variable? what would happern?
-		   | operation
-		   | identifier
-           | comparison
-		   | dictionary
-		   | sequence
-		   | equality
-		   | boolean_operations
-		   | in
- 		   | concat
-           | MINUS expression
-		   | LPAREN expression RPAREN;
+        | operation
+        | identifier
+        | comparison
+        | dictionary
+        | sequence
+        | equality
+        | boolean_operations
+        | in
+        | concat
+        | MINUS expression
+        | LPAREN expression RPAREN;
 
 identifier ::= IDENTIFIER
           | function_call
@@ -130,6 +149,17 @@ identifier ::= IDENTIFIER
           | identifier LBRACKET expression RBRACKET;
 
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
+
+readable ::= IDENTIFIER
+        | readable DOT readable
+        | readable LBRACKET expression RBRACKET;
+
+sequenceSlicing ::= identifier LBRACKET sequenceTail RBRACKET;
+sequenceTail ::= expression COLON expression
+             | expression COLON
+             | COLON expression
+             | COLON;
+
 
 declaration ::= IDENTIFIER COLON data_type dec | IDENTIFIER COLON IDENTIFIER dec;
 dec::= SEMI |;  //we should add this to ambiguities that we can assign functions in declarations
@@ -152,8 +182,7 @@ objectArray ::= IDENTIFIER COLON IDENTIFIER arr
              | IDENTIFIER COLON data_type arr;
 
 arr ::= COMMA objectArray
-    |
-    ;
+    |;
 
 alias ::= ALIAS data_type IDENTIFIER SEMI
       | ALIAS IDENTIFIER IDENTIFIER SEMI ;
@@ -175,12 +204,12 @@ if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI
 break_statement ::= BREAK SEMI
                 | BREAK NUMBER SEMI;   //the ambiguity here is that when break is outside the loop how would we realize
 
-loop_statement ::= LOOP statements POOL;
+loop_statement ::= LOOP statementswithbreak POOL;
 
 
 
 comparison ::= expression LT expression
-			| expression LTEQ expression ;
+	    | expression LTEQ expression ;
 
 
 
@@ -191,20 +220,12 @@ equality ::= expression EQ expression
 
 boolean_operations ::= NOT expression
             | expression AND expression
-		        | expression OR expression
-		        | expression IMPLY expression
-		        ;
+	    | expression OR expression
+	    | expression IMPLY expression
+	    ;
 
 
 in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN sequence;
-
-sequenceSlicing ::= identifier LBRACKET sequenceTail RBRACKET;
-sequenceTail ::= expression COLON expression
-             | expression COLON
-             | COLON expression
-             | COLON;
-
-
 /*a.b.c.name[1:2].foo.bar.name[1]*/
 
 
