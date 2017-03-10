@@ -41,11 +41,11 @@ terminal QMARK, STRING, DOT;
 
 //DEAL WITH PRINT
 
-non terminal statements, statements_, body, declaration, expression, declaration_assignment, dictionary_binding, typeDefinition, objectArray;
-non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
-non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
+non terminal statements, statements_, declaration, expression, declaration_assignment, dictionary_binding, typeDefinition, objectArray;
+non terminal alias, parameter, function, returnType, if_statement, if_else_statement, break_statement;
+non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params, params_;
-non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier, comp;
+non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier;
 non terminal idiot;
 non terminal print_statement, read_statement, decla, statements__;
 
