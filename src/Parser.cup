@@ -200,7 +200,8 @@ sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET;
 
  sequenceTail ::= expression COLON expression
              | expression COLON
-             | COLON expression;
+             | COLON expression
+             |COLON;
 
 /*a.b.c.name[1:2].foo.bar.name[1]*/
 
