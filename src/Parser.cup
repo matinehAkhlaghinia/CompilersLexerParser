@@ -42,7 +42,7 @@ terminal QMARK, STRING, DOT;
 //DEAL WITH PRINT
 
 non terminal statements, statements_, declaration, expression, declaration_assignment, typeDefinition, objectArray;
-non terminal alias, parameter, function, returnType, if_statement, if_else_statement, break_statement;
+non terminal alias, parameter, function, returnType, if_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params, params_;
 non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier;
@@ -225,14 +225,14 @@ boolean_operations ::= NOT expression
 	    ;
 
 
-in ::= expression IN identifier | expression IN dictionary | expression IN sequence | expression IN STRING;
+in ::= expression IN identifier | expression IN dictionary | expression IN sequence;
 /*a.b.c.name[1:2].foo.bar.name[1]*/
 
 
 concat ::= idiot COLONCOLON idiot
         | idiot COLONCOLON concat;
 
-idiot ::= sequence | identifier ;
+idiot ::= sequence | identifier | STRING;
 
 
 seq ::= SEQ LT data_type GT
