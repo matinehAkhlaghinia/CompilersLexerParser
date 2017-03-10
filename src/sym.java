@@ -36,6 +36,7 @@ public class sym {
   public static final int LOOP = 27;
   public static final int MAIN = 51;
   public static final int IF = 25;
+  public static final int DOT = 57;
   public static final int EOF = 0;
   public static final int BOOLEAN = 19;
   public static final int RETURN = 50;
@@ -120,7 +121,8 @@ public class sym {
   "PRINT",
   "POW",
   "QMARK",
-  "STRING"
+  "STRING",
+  "DOT"
   };
 }
 

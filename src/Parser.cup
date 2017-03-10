@@ -35,32 +35,18 @@ terminal IDENTIFIER;
 terminal PLUS,  MINUS, TIMES, DIV, MOD;
 terminal COLONEQ, LT, GT, LTEQ, EQ, NOTEQ;
 terminal AND, OR, IMPLY;
-<<<<<<< HEAD
 terminal RETURN, MAIN, READ, PRINT, POW;
-terminal QMARK, STRING;
-=======
-terminal RETURN, MAIN, READ, POW;
 terminal QMARK, STRING, DOT;
->>>>>>> origin/test
 
 
 //DEAL WITH PRINT
 
-<<<<<<< HEAD
 non terminal statements, statements_, body, declaration, expression, declaration_assignment, dictionary_binding, typeDefinition, objectArray;
 non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params, params_;
-non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data;
-non terminal print_statement;
-=======
-non terminal statements, body, declaration, expression, declaration_assignment, dictionary_binding, typeDefinition, objectArray;
-non terminal alias, parameter, function, returnType, if_statement, if_else_statement, break_statement;
-non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
-non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params;
 non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier, comp;
-
->>>>>>> origin/test
+non terminal print_statement;
 
 //Precedence declaration
 
@@ -99,7 +85,6 @@ data_type ::= seq
           | BOOL
           | CHAR ;//dict might be an issue
 
-<<<<<<< HEAD
 statements_ ::= declaration 
             | declaration_assignment 
             | break_statement 
@@ -112,27 +97,16 @@ statements_ ::= declaration
             | print_statement
             | alias  
             | assignment  
-            | function_call SEMI;
+            | function_call SEMI
+            | function;
 
 statements ::= statements_ statements | statements_ ;
 print_statement ::= PRINT expression SEMI;
 
-//printable ::= function_call | expression;
-=======
-statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|function statements|;
-///the body of the functions
-
->>>>>>> origin/test
-
 expression ::= data  //an ambiguity can be assigning empty to a variable? what would happern?
 		   | operation
-<<<<<<< HEAD
-		   | IDENTIFIER
-               | comparison
-=======
 		   | identifier
-       | comparison
->>>>>>> origin/test
+               | comparison
 		   | dictionary
 		   | sequence
 		   | equality
