@@ -41,7 +41,7 @@ terminal QMARK, STRING, DOT;
 
 //DEAL WITH PRINT
 
-non terminal statements, statements_, declaration, expression, declaration_assignment, dictionary_binding, typeDefinition, objectArray;
+non terminal statements, statements_, declaration, expression, declaration_assignment, typeDefinition, objectArray;
 non terminal alias, parameter, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params, params_;
@@ -89,7 +89,6 @@ data_type ::= seq
           | TOP ;//dict might be an issue
 
 statements__ ::= break_statement
-            | dictionary_binding
             | if_statement
             | if_else_statement
             | loop_statement
@@ -125,7 +124,7 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | LPAREN expression RPAREN;
 
 
-identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET | sequenceSlicing DOT identifier | sequenceSlicing | function_call DOT identifier| function_call;
+identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET|IDENTIFIER LBRACKET expression RBRACKET DOT identifier | sequenceSlicing DOT identifier | sequenceSlicing | function_call DOT identifier| function_call;
 
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
