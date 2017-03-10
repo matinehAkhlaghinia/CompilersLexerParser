@@ -129,7 +129,7 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | LPAREN expression RPAREN;
 
 
-identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET | sequenceSlicing DOT identifier;
+identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET | sequenceSlicing DOT identifier | sequenceSlicing;
 
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
@@ -205,9 +205,12 @@ boolean_operations ::= NOT expression
 
 in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN sequence;
 
-sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
+sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET;
           /*data_type IN data_type*/
-          | data_type COLON data_type ;
+          /*| data_type COLON data_type ;*/
+
+
+          ///thirdlist:seq<top> := l2[:-2] :: l2[3:];
 
  sequenceTail ::= expression COLON expression
              | expression COLON
