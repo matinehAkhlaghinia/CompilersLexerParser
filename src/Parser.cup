@@ -42,10 +42,10 @@ terminal QMARK, STRING, DOT;
 ///
 
 non terminal statements, body, declaration, expression, declaration_assignment, dictionary_binding, typeDefinition, objectArray;
-non terminal alias, parameter, parameterTail, function, returnType, if_statement, if_else_statement, break_statement;
+non terminal alias, parameter, function, returnType, if_statement, if_else_statement, break_statement;
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params;
-non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier;
+non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier, comp;
 
 
 //Precedence declaration
@@ -69,14 +69,13 @@ program_block ::= statements;
 
 
 
-/*function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
+function ::= FDEF IDENTIFIER LPAREN parameter RPAREN LCURL statements RCURL returnType SEMI; ////do we need to consider space?
 
 returnType ::= COLON data_type
                 | ;
 
-parameter ::= IDENTIFIER COLON data_type parameterTail;
-parameterTail ::= COMMA parameter
-                | ;*/
+parameter ::= IDENTIFIER COLON data_type COMMA parameter| IDENTIFIER COLON data_type|;
+
 
 data_type ::= seq
           | dict
@@ -86,7 +85,7 @@ data_type ::= seq
           | BOOL
           | CHAR ;//dict might be an issue
 
-statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|;
+statements ::= declaration statements | declaration_assignment statements | break_statement statements | dictionary_binding statements | if_statement statements | if_else_statement statements | loop_statement statements | return_ statements| typeDefinition statements | alias statements | assignment statements|function statements|;
 ///the body of the functions
 
 
@@ -103,7 +102,7 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | sequenceSlicing
  		   | concat ;
 
-identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER;
+identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER | IDENTIFIER LBRACKET identifier RBRACKET;
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
 declaration ::= IDENTIFIER COLON data_type dec | IDENTIFIER COLON IDENTIFIER dec;
@@ -113,7 +112,7 @@ declaration_assignment ::= declaration COLONEQ all_data SEMI;
 all_data ::= expression | expression COMMA all_data;
 
 assignment ::= identifier COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
-//f:family := m,p,[c1,c2];
+//s1:string := "Alice in Wonderland";
 // dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
 
 //m:person := 30, 11, 40;
@@ -149,14 +148,19 @@ params ::= expression COMMA params
 if_statement ::= IF LPAREN expression RPAREN THEN statements ELSE statements FI
              | IF LPAREN expression RPAREN THEN statements FI;
 
-
+//if (i) then
 break_statement ::= BREAK SEMI
                 | BREAK NUMBER SEMI;   //the ambiguity here is that when break is outside the loop how would we realize
 
 loop_statement ::= LOOP statements POOL;
 
-comparison ::= NUMBER LT NUMBER
-            | NUMBER LTEQ NUMBER;
+/*comparison ::= NUMBER LT NUMBER
+            | NUMBER LTEQ NUMBER;*/
+
+comparison ::= identifier LT identifier| identifier LT NUMBER | NUMBER LT identifier| NUMBER LT NUMBER| NUMBER LTEQ NUMBER| identifier LTEQ identifier| identifier LTEQ NUMBER | NUMBER LTEQ identifier ;
+
+
+//if (i<books)
 
 equality ::= NUMBER EQ NUMBER
           | BOOL EQ BOOL
@@ -173,8 +177,7 @@ equality ::= NUMBER EQ NUMBER
 		        | BOOLEAN ;*/
 
 
-in ::= data_type IN sequence
-   | data_type IN dictionary ;
+in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN sequence;
 
 // sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
 //          |
@@ -216,21 +219,19 @@ dict ::= DICT LT data_type COMMA data_type GT;
 
 // //one of the amguities is + coming before negative numbers
 
-// operation  ::= operation PLUS operation
-// 	      |
-// 	      operation MINUS operation
-// 	      |
-//           operation TIMES operation
-// 	      |
-// 	      operation DIV operation
-// 	      |
-//           operation MOD operation
-// 	      |
-// 	      operation POW operation
-// 	      |
-//        NUMBER
-// 	      |
-//        MINUS operation
-// 	      |
-//        LPAREN operation RPAREN
-//        ;
+ operation  ::= expression PLUS expression
+	      |
+ 	      expression MINUS expression
+	      |
+        expression TIMES expression
+	      |
+        expression DIV expression
+	      |
+        expression MOD expression
+	      |
+	      expression POW expression
+ 	      |
+        MINUS expression
+	      |
+        LPAREN expression RPAREN
+        ;
