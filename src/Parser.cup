@@ -85,18 +85,18 @@ data_type ::= seq
           | BOOL
           | CHAR ;//dict might be an issue
 
-statements_ ::= declaration 
-            | declaration_assignment 
-            | break_statement 
-            | dictionary_binding  
-            | if_statement  
-            | if_else_statement  
-            | loop_statement  
-            | return_ 
-            | typeDefinition  
+statements_ ::= declaration
+            | declaration_assignment
+            | break_statement
+            | dictionary_binding
+            | if_statement
+            | if_else_statement
+            | loop_statement
+            | return_
+            | typeDefinition
             | print_statement
-            | alias  
-            | assignment  
+            | alias
+            | assignment
             | function_call SEMI
             | function;
 
@@ -113,7 +113,7 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | boolean_operations
 		   | in
 		   | sequenceSlicing
- 		   | concat 
+ 		   | concat
                | function_call;
 
 identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER | IDENTIFIER LBRACKET identifier RBRACKET;
@@ -208,16 +208,23 @@ in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN seque
 //              COLON IDENTIFIER
 //              ;
 
-concat ::= SEQ COLONCOLON SEQ concat_tail
+concat ::= sequence COLONCOLON sequence
         |
-        IDENTIFIER COLONCOLON IDENTIFIER concat_tail
+        sequence COLONCOLON identifier
+        |
+        identifier COLONCOLON sequence
+        |
+        identifier COLONCOLON identifier
+        |
+        identifier COLONCOLON identifier COLONCOLON concat
+        |
+        sequence  COLONCOLON sequence COLONCOLON concat
+        |
+        identifier COLONCOLON sequence  COLONCOLON concat
+        |
+        sequence COLONCOLON identifier COLONCOLON concat
         ;
 
- concat_tail  ::= COLONCOLON SEQ concat_tail
-             |
-            COLONCOLON IDENTIFIER concat_tail
-             |
-            ;
 
 seq ::= SEQ LT data_type GT
      | SEQ LT IDENTIFIER GT;
