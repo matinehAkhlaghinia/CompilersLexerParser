@@ -98,7 +98,7 @@ String = \" ~\"
   "&&"                           {  return symbol(sym.AND); }
   "||"                           {  return symbol(sym.OR); }
   "+"                            {  return symbol(sym.PLUS); }
-  "-"                            {  System.out.println("MINUS"); return symbol(sym.MINUS); }
+  "-"                            {  return symbol(sym.MINUS); }
   "*"                            {  return symbol(sym.TIMES); }
   "/"                            {  return symbol(sym.DIV); }
   "^"                            {  return symbol(sym.POW); }
@@ -119,7 +119,7 @@ String = \" ~\"
 
     //COMMENT DONT RETURN ANYTHING
   {Character}                    {  return symbol(sym.CHARACTER); }
-  {Number}                       {  System.out.println("NUMBER"); return symbol(sym.NUMBER); }
+  {Number}                       {  return symbol(sym.NUMBER); }
   {Boolean}                      {  return symbol(sym.BOOLEAN); }
   {String}                       { return symbol(sym.STRING); }
 
