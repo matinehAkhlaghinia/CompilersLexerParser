@@ -729,7 +729,7 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 60: break;
           case 3: 
-            { System.out.println("NUMBER"); return symbol(sym.NUMBER);
+            { return symbol(sym.NUMBER);
             }
           case 61: break;
           case 4: 
@@ -777,7 +777,7 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 72: break;
           case 15: 
-            { System.out.println("MINUS"); return symbol(sym.MINUS);
+            { return symbol(sym.MINUS);
             }
           case 73: break;
           case 16: 

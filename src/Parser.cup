@@ -46,7 +46,7 @@ non terminal alias, parameter, parameterTail, function, returnType, if_statement
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params, params_;
 non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier, comp;
-non terminal print_statement, read_statement;
+non terminal print_statement, read_statement, decla, statements__;
 
 //Precedence declaration
 
@@ -89,9 +89,7 @@ data_type ::= seq
           | CHAR
           | TOP ;//dict might be an issue
 
-statements_ ::= declaration
-            | declaration_assignment
-            | break_statement
+statements__ ::= break_statement
             | dictionary_binding
             | if_statement
             | if_else_statement
@@ -105,7 +103,12 @@ statements_ ::= declaration
             | function
 			| read_statement;
 
-statements ::= statements_ statements | statements_ ;
+decla ::= declaration
+	   | declaration_assignment;
+
+statements_ ::= statements__ statements_ | statements__ ;
+
+statements ::= decla | decla statements | statements_;
 print_statement ::= PRINT expression SEMI;
 read_statement ::= READ identifier SEMI;
 
