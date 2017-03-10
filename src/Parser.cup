@@ -56,7 +56,7 @@ precedence left PLUS, MINUS;
 precedence left TIMES, DIV, MOD, POW;
 precedence left NOT, AND, OR, IMPLY;
 precedence left EQ, NOTEQ, LTEQ, LT;
-precedence left LPAREN, RPAREN;
+precedence left LPAREN, RPAREN, DOT;
 
 
 
@@ -123,8 +123,11 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
            | MINUS expression
 		   | LPAREN expression RPAREN;
 
-
-identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET|IDENTIFIER LBRACKET expression RBRACKET DOT identifier | sequenceSlicing DOT identifier | sequenceSlicing | function_call DOT identifier| function_call;
+identifier ::= IDENTIFIER
+          | function_call
+          | sequenceSlicing
+          | identifier DOT identifier
+          | identifier LBRACKET expression RBRACKET;
 
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
@@ -195,13 +198,12 @@ boolean_operations ::= NOT expression
 
 in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN sequence;
 
-sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET;
-
-
- sequenceTail ::= expression COLON expression
+sequenceSlicing ::= identifier LBRACKET sequenceTail RBRACKET;
+sequenceTail ::= expression COLON expression
              | expression COLON
              | COLON expression
-             |COLON;
+             | COLON;
+
 
 /*a.b.c.name[1:2].foo.bar.name[1]*/
 
