@@ -1,0 +1,26 @@
+Paragraph: 2, 14
+Problem: It is not clear that if it's possible to have a function definition inside main.
+Our solution: We considered this as possible and our compiler accepts it as other programming languages like Java 8 accept this.
+
+Paragraph: 10, 12
+Problem: It is not clear that we can do the operations like concatenation and using keyword "in" on a string.
+Our solution: As it's claimed in the pdf that string is a syntactic sugar for character sequences, our compiler accepts operations like concatenation and using keyword "in" on string literals.
+
+Paragraph: 10
+Problem: It is not clear that using keyword len is allowed on a string.
+Our solution: As it's claimed in the pdf that string is a syntactic sugar for character sequences, our compiler accepts this syntax “hello”.len .
+
+
+Paragraph: 11
+Problem: It is not clear that if we are allowed to omit both the start and end indices in sequence slicing.
+Our solution: We decided to allow this syntax since languages like python accept this.
+
+
+Paragraph: 14
+Problem: It is not clear that if we can have function declarations nested.
+Our solution: We decided to allow this since some programming languages like Java 8 allow this syntax.
+
+
+
+
+
