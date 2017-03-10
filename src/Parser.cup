@@ -84,20 +84,21 @@ data_type ::= seq
           | FLOAT
           | RAT
           | BOOL
-          | CHAR ;//dict might be an issue
+          | CHAR
+          | TOP ;//dict might be an issue
 
-statements_ ::= declaration 
-            | declaration_assignment 
-            | break_statement 
-            | dictionary_binding  
-            | if_statement  
-            | if_else_statement  
-            | loop_statement  
-            | return_ 
-            | typeDefinition  
+statements_ ::= declaration
+            | declaration_assignment
+            | break_statement
+            | dictionary_binding
+            | if_statement
+            | if_else_statement
+            | loop_statement
+            | return_
+            | typeDefinition
             | print_statement
-            | alias  
-            | assignment  
+            | alias
+            | assignment
             | function_call SEMI
             | function;
 
@@ -115,8 +116,8 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | in
 		   | sequenceSlicing
  		   | concat 
-               | function_call
-               | MINUS expression;
+       | function_call
+       | MINUS expression;
 
 identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER | IDENTIFIER LBRACKET identifier RBRACKET;
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
@@ -131,7 +132,6 @@ assignment ::= identifier COLONEQ expression SEMI; //define data imo the data sh
 //s1:string := "Alice in Wonderland";
 // dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
 
-//m:person := 30, 11, 40;
 dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
    	     | ;
@@ -184,11 +184,11 @@ equality ::= expression EQ expression
 
 // // //We need to think about this case bool a = 2
 
-/*boolean_operations ::= NOT boolean_operations
-            | boolean_operations AND boolean_operations
-		        | boolean_operations OR boolean_operations
-		        | boolean_operations IMPLY boolean_operations
-		        | BOOLEAN ;*/
+boolean_operations ::= NOT expression
+            | expression AND expression
+		        | expression OR expression
+		        | expression IMPLY expression
+		        ;
 
 
 in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN sequence;
@@ -207,13 +207,15 @@ in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN seque
 //              COLON IDENTIFIER
 //              ;
 
-concat ::= SEQ COLONCOLON SEQ concat_tail
-        | IDENTIFIER COLONCOLON IDENTIFIER concat_tail
-        ;
 
- concat_tail  ::= COLONCOLON SEQ concat_tail
-             | COLONCOLON IDENTIFIER concat_tail
-             | ;
+concat ::= sequence COLONCOLON sequence
+        | sequence COLONCOLON identifier
+        | identifier COLONCOLON sequence
+        | identifier COLONCOLON identifier
+        | identifier COLONCOLON identifier COLONCOLON concat
+        | sequence  COLONCOLON sequence COLONCOLON concat
+        | identifier COLONCOLON sequence  COLONCOLON concat
+        | sequence COLONCOLON identifier COLONCOLON concat ;
 
 seq ::= SEQ LT data_type GT
      | SEQ LT IDENTIFIER GT;

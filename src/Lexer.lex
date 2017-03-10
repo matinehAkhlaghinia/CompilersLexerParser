@@ -64,15 +64,13 @@ String = \" ~\"
   "int"                          {  return symbol(sym.INT); }
   "rat"                          {  return symbol(sym.RAT); }
   "bool"                         {  return symbol(sym.BOOL); }
-  "char"                         {  System.out.println("char");
-                                    return symbol(sym.CHAR); }
+  "char"                         { return symbol(sym.CHAR); }
   "top"                          {  return symbol(sym.TOP); }
   "dict"                         {  return symbol(sym.DICT); }
   "seq"                          {  return symbol(sym.SEQ); }
 
   //keywords
-  "if"                           {  System.out.println("IF");
-                                    return symbol(sym.IF); }
+  "if"                           {return symbol(sym.IF); }
   "fi"                           {  return symbol(sym.FI); }
   "then"                         {  return symbol(sym.THEN); }
   "else"                         {  return symbol(sym.ELSE); }
@@ -84,17 +82,13 @@ String = \" ~\"
   "return"                       {  return symbol(sym.RETURN); }
   "read"                         {  return symbol(sym.READ); }
   "print"                        {  return symbol(sym.PRINT); }
-  "alias"                        {  System.out.println("alias");
-                                    return symbol(sym.ALIAS); }
+  "alias"                        { return symbol(sym.ALIAS); }
 
   //OPERATORS
   "="                            {  return symbol(sym.EQ); }
-  ":="                           {System.out.println("COLONEQ");
-                                  return symbol(sym.COLONEQ); }
-  "<"                            {  System.out.println(">");
-                                    return symbol(sym.LT); }
-  ">"                            {  System.out.println("<");
-                                    return symbol(sym.GT); }
+  ":="                           { return symbol(sym.COLONEQ); }
+  "<"                            { return symbol(sym.LT); }
+  ">"                            {  return symbol(sym.GT); }
   "!"                            {  return symbol(sym.NOT); }
   "?"                            {  return symbol(sym.QMARK); }
   ":"                            {  return symbol(sym.COLON); }
@@ -114,14 +108,11 @@ String = \" ~\"
   ","                            {  return symbol(sym.COMMA); }
   "{"                            {  return symbol(sym.LCURL); }
   "}"                            {  return symbol(sym.RCURL); }
-  "("                            {    System.out.println("LPAREN");
-                                      return symbol(sym.LPAREN); }
-  ")"                            {   System.out.println("RPAREN");
-                                     return symbol(sym.RPAREN); }
+  "("                            {  return symbol(sym.LPAREN); }
+  ")"                            {  return symbol(sym.RPAREN); }
   "["                            {  return symbol(sym.LBRACKET); }
   "]"                            {  return symbol(sym.RBRACKET); }
-  ";"                            {  System.out.println("SEMI");
-                                    return symbol(sym.SEMI); }
+  ";"                            { return symbol(sym.SEMI); }
   "."                            {  return symbol(sym.DOT); }
 
   //Punctuation
@@ -130,14 +121,12 @@ String = \" ~\"
   {Character}                    {  return symbol(sym.CHARACTER); }
   {Number}                       {  System.out.println("NUMBER"); return symbol(sym.NUMBER); }
   {Boolean}                      {  return symbol(sym.BOOLEAN); }
-  {String}                       {  System.out.println("STRING");
-                                    return symbol(sym.STRING); }
+  {String}                       { return symbol(sym.STRING); }
 
   //namings
-  {Identifier}                   {   System.out.println("IDENT");
-                                    return  symbol(sym.IDENTIFIER); }
+  {Identifier}                   { return  symbol(sym.IDENTIFIER); }
 
-  {WhiteSpace} {System.out.println("space/newline");}
+  {WhiteSpace} {}
   {Comment} {}
 
 }
