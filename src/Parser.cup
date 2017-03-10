@@ -46,7 +46,7 @@ non terminal alias, parameter, parameterTail, function, returnType, if_statement
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params, params_;
 non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier, comp;
-non terminal print_statement;
+non terminal print_statement, idiot;
 
 //Precedence declaration
 
@@ -115,11 +115,11 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | boolean_operations
 		   | in
 		   | sequenceSlicing
- 		   | concat 
+ 		   | concat
        | function_call
        | MINUS expression;
 
-identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER | IDENTIFIER LBRACKET identifier RBRACKET;
+identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER | IDENTIFIER LBRACKET expression RBRACKET;
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
 declaration ::= IDENTIFIER COLON data_type dec | IDENTIFIER COLON IDENTIFIER dec;
@@ -131,7 +131,7 @@ all_data ::= expression | expression COMMA all_data;
 assignment ::= identifier COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
 //s1:string := "Alice in Wonderland";
 // dictionary_binding ::= IDENTIFIER LBRACKET expression RBRACKET COLON COLONEQ expression SEMI;
-
+//l1:seq<string> := ["a","b", "c", "d", "e"];
 dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
    	     | ;
@@ -193,29 +193,32 @@ boolean_operations ::= NOT expression
 
 in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN sequence;
 
-// sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
-//          |
-//          data_type IN data_type
-//          |
-//          data_type COLON data_type
-//          ;
+sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
+          /*data_type IN data_type*/
+          |
+          data_type COLON data_type
+          ;
 
-// sequenceTail ::= IDENTIFIER COLON IDENTIFIER
-//              |
-//              IDENTIFIER COLON
-//              |
-//              COLON IDENTIFIER
-//              ;
+ sequenceTail ::= expression COLON expression
+             |
+            expression COLON
+            |
+             COLON expression
+             ;
 
 
-concat ::= sequence COLONCOLON sequence
-        | sequence COLONCOLON identifier
-        | identifier COLONCOLON sequence
+concat ::= idiot COLONCOLON idiot
+        | idiot COLONCOLON concat;
+        /*| idiot COLONCOLON concat
+        | idiot;*/
+        /*| identifier COLONCOLON concat
         | identifier COLONCOLON identifier
         | identifier COLONCOLON identifier COLONCOLON concat
         | sequence  COLONCOLON sequence COLONCOLON concat
         | identifier COLONCOLON sequence  COLONCOLON concat
-        | sequence COLONCOLON identifier COLONCOLON concat ;
+        | sequence COLONCOLON identifier COLONCOLON concat ;*/
+idiot ::= sequence | identifier | sequenceSlicing;
+        //anotherlist:seq<top> := [s1] :: [s2] :: newlist;
 
 seq ::= SEQ LT data_type GT
      | SEQ LT IDENTIFIER GT;

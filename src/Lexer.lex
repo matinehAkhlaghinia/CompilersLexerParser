@@ -67,7 +67,8 @@ String = \" ~\"
   "char"                         { return symbol(sym.CHAR); }
   "top"                          {  return symbol(sym.TOP); }
   "dict"                         {  return symbol(sym.DICT); }
-  "seq"                          {  return symbol(sym.SEQ); }
+  "seq"                          {   System.out.println("seq");
+                                    return symbol(sym.SEQ); }
 
   //keywords
   "if"                           {return symbol(sym.IF); }
@@ -86,12 +87,16 @@ String = \" ~\"
 
   //OPERATORS
   "="                            {  return symbol(sym.EQ); }
-  ":="                           { return symbol(sym.COLONEQ); }
-  "<"                            { return symbol(sym.LT); }
-  ">"                            {  return symbol(sym.GT); }
+  ":="                           {  System.out.println("COLONEQ");
+                                    return symbol(sym.COLONEQ); }
+  "<"                            {  System.out.println("<");
+                                    return symbol(sym.LT); }
+  ">"                            {   System.out.println(">");
+                                    return symbol(sym.GT); }
   "!"                            {  return symbol(sym.NOT); }
   "?"                            {  return symbol(sym.QMARK); }
-  ":"                            {  return symbol(sym.COLON); }
+  ":"                            {  System.out.println("colon");
+                                    return symbol(sym.COLON); }
   "::"                           {  return symbol(sym.COLONCOLON); }
   "<="                           {  return symbol(sym.LTEQ); }
   "!="                           {  return symbol(sym.NOTEQ); }
@@ -110,8 +115,10 @@ String = \" ~\"
   "}"                            {  return symbol(sym.RCURL); }
   "("                            {  return symbol(sym.LPAREN); }
   ")"                            {  return symbol(sym.RPAREN); }
-  "["                            {  return symbol(sym.LBRACKET); }
-  "]"                            {  return symbol(sym.RBRACKET); }
+  "["                            {   System.out.println("LBRACK");
+                                    return symbol(sym.LBRACKET); }
+  "]"                            {  System.out.println("RBRACK");
+                                    return symbol(sym.RBRACKET); }
   ";"                            { return symbol(sym.SEMI); }
   "."                            {  return symbol(sym.DOT); }
 
@@ -121,10 +128,12 @@ String = \" ~\"
   {Character}                    {  return symbol(sym.CHARACTER); }
   {Number}                       {  return symbol(sym.NUMBER); }
   {Boolean}                      {  return symbol(sym.BOOLEAN); }
-  {String}                       { return symbol(sym.STRING); }
+  {String}                       {  System.out.println("string");
+                                    return symbol(sym.STRING); }
 
   //namings
-  {Identifier}                   { return  symbol(sym.IDENTIFIER); }
+  {Identifier}                   {  System.out.println("ident");
+                                    return  symbol(sym.IDENTIFIER); }
 
   {WhiteSpace} {}
   {Comment} {}
