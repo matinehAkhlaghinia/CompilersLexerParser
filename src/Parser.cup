@@ -123,14 +123,13 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | equality
 		   | boolean_operations
 		   | in
-		   | sequenceSlicing
  		   | concat
            | function_call
            | MINUS expression
 		   | LPAREN expression RPAREN;
 
 
-identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER | IDENTIFIER LBRACKET expression RBRACKET;
+identifier ::= IDENTIFIER | IDENTIFIER DOT identifier | IDENTIFIER LBRACKET expression RBRACKET | sequenceSlicing;
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
 declaration ::= IDENTIFIER COLON data_type dec | IDENTIFIER COLON IDENTIFIER dec;
@@ -207,16 +206,13 @@ in ::= expression IN IDENTIFIER | expression IN dictionary | expression IN seque
 
 sequenceSlicing ::= IDENTIFIER LBRACKET sequenceTail RBRACKET
           /*data_type IN data_type*/
-          |
-          data_type COLON data_type
-          ;
+          | data_type COLON data_type ;
 
  sequenceTail ::= expression COLON expression
-             |
-            expression COLON
-            |
-             COLON expression
-             ;
+             | expression COLON
+             | COLON expression;
+
+/*a.b.c.name[1:2].foo.bar.name[1]*/
 
 
 concat ::= idiot COLONCOLON idiot
@@ -229,7 +225,7 @@ concat ::= idiot COLONCOLON idiot
         | sequence  COLONCOLON sequence COLONCOLON concat
         | identifier COLONCOLON sequence  COLONCOLON concat
         | sequence COLONCOLON identifier COLONCOLON concat ;*/
-idiot ::= sequence | identifier | sequenceSlicing;
+idiot ::= sequence | identifier ;
         //anotherlist:seq<top> := [s1] :: [s2] :: newlist;
 
 seq ::= SEQ LT data_type GT
