@@ -125,7 +125,7 @@ String = \" ~\"
   //namings
   {Identifier}                   { return  symbol(sym.IDENTIFIER); }
 
-  {WhiteSpace} {System.out.println("space/newline");}
+  {WhiteSpace} {}
   {Comment} {}
 
 }
