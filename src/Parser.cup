@@ -46,14 +46,16 @@ non terminal alias, parameter, parameterTail, function, returnType, if_statement
 non terminal loop_statement, comparison, equality, boolean_operations, sequence, sequenceTail, operation, concat, concat_tail;
 non terminal dictionary, dict_element, seq_element, in, data, sequenceSlicing, data_type, return_, function_call, params, params_;
 non terminal main, initial, dec, arr, seq, assignment, dict, program_block, all_data, identifier, comp;
-non terminal print_statement;
+non terminal print_statement, read_statement;
 
 //Precedence declaration
 
 precedence left PLUS, MINUS;
 precedence left TIMES, DIV, MOD, POW;
 precedence left NOT, AND, OR, IMPLY;
-precedence left EQ, NOTEQ;
+precedence left EQ, NOTEQ, LTEQ, LT;
+precedence left LPAREN, RPAREN;
+
 
 
 
@@ -100,15 +102,17 @@ statements_ ::= declaration
             | alias
             | assignment
             | function_call SEMI
-            | function;
+            | function
+			| read_statement;
 
 statements ::= statements_ statements | statements_ ;
 print_statement ::= PRINT expression SEMI;
+read_statement ::= READ identifier SEMI;
 
 expression ::= data  //an ambiguity can be assigning empty to a variable? what would happern?
 		   | operation
 		   | identifier
-               | comparison
+           | comparison
 		   | dictionary
 		   | sequence
 		   | equality
@@ -116,8 +120,9 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 		   | in
 		   | sequenceSlicing
  		   | concat 
-       | function_call
-       | MINUS expression;
+           | function_call
+           | MINUS expression
+		   | LPAREN expression RPAREN;
 
 identifier ::= IDENTIFIER | IDENTIFIER DOT IDENTIFIER | IDENTIFIER LBRACKET identifier RBRACKET;
 data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
@@ -174,7 +179,8 @@ loop_statement ::= LOOP statements POOL;
 /*comparison ::= NUMBER LT NUMBER
             | NUMBER LTEQ NUMBER;*/
 
-comparison ::= identifier LT identifier| identifier LT NUMBER | NUMBER LT identifier| NUMBER LT NUMBER| NUMBER LTEQ NUMBER| identifier LTEQ identifier| identifier LTEQ NUMBER | NUMBER LTEQ identifier ;
+comparison ::= expression LT expression
+			| expression LTEQ expression ;
 
 
 //if (i<books)
@@ -233,7 +239,6 @@ dict ::= DICT LT data_type COMMA data_type GT;
 operation  ::= expression PLUS expression
 	      | expression MINUS expression
 	      | expression TIMES expression
-	      | expression DIV expression
+	      | expression DIV expression 
 	      | expression MOD expression
-	      | expression POW expression
-	      | LPAREN expression RPAREN;
+	      | expression POW expression;

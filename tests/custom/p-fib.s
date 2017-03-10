@@ -10,5 +10,6 @@ fdef fibonacci( pos : int ) {
 	if (pos = 0) then
 		return 1;
 	fi	
+	
 	return ?T?fibonacci(pos-1) + ?T?fibonacci(pos-2);
 } : int ;
