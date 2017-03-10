@@ -153,8 +153,8 @@ identifier ::= IDENTIFIER
 
 
 readable ::= IDENTIFIER
-        | readable DOT readable
-        | readable LBRACKET expression RBRACKET;
+        | readable DOT identifier
+        | readable LBRACKET identifier RBRACKET;
 
 sequenceSlicing ::= identifier LBRACKET sequenceTail RBRACKET;
 sequenceTail ::= expression COLON expression
