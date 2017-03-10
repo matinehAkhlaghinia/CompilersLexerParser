@@ -129,7 +129,9 @@ if_statementwithbreak ::= IF LPAREN expression RPAREN THEN statementswithbreak E
 print_statement ::= PRINT expression SEMI;
 read_statement ::= READ readable SEMI;
 
-expression ::= data  //an ambiguity can be assigning empty to a variable? what would happern?
+expression ::= NUMBER 
+        | CHARACTER 
+        | BOOLEAN //an ambiguity can be assigning empty to a variable? what would happern?
         | operation
         | identifier
         | comparison
@@ -145,10 +147,10 @@ expression ::= data  //an ambiguity can be assigning empty to a variable? what w
 identifier ::= IDENTIFIER
           | function_call
           | sequenceSlicing
+          | STRING
           | identifier DOT identifier
           | identifier LBRACKET expression RBRACKET;
 
-data ::= NUMBER | CHARACTER | BOOLEAN | STRING;
 
 readable ::= IDENTIFIER
         | readable DOT readable
@@ -167,7 +169,7 @@ dec::= SEMI |;  //we should add this to ambiguities that we can assign functions
 declaration_assignment ::= declaration COLONEQ all_data SEMI;
 all_data ::= expression | expression COMMA all_data;
 
-assignment ::= identifier COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
+assignment ::= readable COLONEQ expression SEMI; //define data imo the data should be passed from the lexer
 dictionary ::= LCURL dict_element RCURL;
 dict_element ::= data_type COLON data_type COMMA dict_element
    	     | ;
@@ -225,14 +227,14 @@ boolean_operations ::= NOT expression
 	    ;
 
 
-in ::= expression IN identifier | expression IN dictionary | expression IN sequence | expression IN STRING;
+in ::= expression IN dictionary | expression IN idiot;
 /*a.b.c.name[1:2].foo.bar.name[1]*/
 
 
 concat ::= idiot COLONCOLON idiot
         | idiot COLONCOLON concat;
 
-idiot ::= sequence | identifier | STRING;
+idiot ::= sequence | identifier;
 
 
 seq ::= SEQ LT data_type GT
